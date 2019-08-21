@@ -1,0 +1,77 @@
+{
+  "defaultTheme": {
+    "palette":{
+      "common":{
+        "black":"#000",
+        "white":"#fff"
+      },
+      "background":{
+        "paper":"rgba(255, 255, 255, 1)",
+        "default":"rgba(238, 238, 238, 1)"
+      },
+      "primary":{
+        "light":"rgba(249, 249, 249, 1)",
+        "main":"rgba(248, 248, 248, 1)",
+        "dark":"rgba(173, 173, 173, 1)",
+        "contrastText":"rgba(75, 75, 75, 1)"
+      },
+      "secondary":{
+        "light":"rgba(111, 191, 115, 1)",
+        "main":"rgba(76, 175, 80, 1)",
+        "dark":"rgba(53, 122, 56, 1)",
+        "contrastText":"#fff"
+      },
+      "error":{
+        "light":"#e57373",
+        "main":"#f44336",
+        "dark":"#d32f2f",
+        "contrastText":"#fff"
+      },
+      "text":{
+        "primary":"rgba(0, 0, 0, 1)",
+        "secondary":"rgba(0, 0, 0, 0.54)",
+        "disabled":"rgba(0, 0, 0, 1)",
+        "hint":"rgba(0, 0, 0, 0.38)"
+      }
+    },
+    "themeName": "defaultTheme"
+  },
+  "darkTheme": {
+
+      "palette":{
+        "common":{
+          "black":"rgba(0, 0, 0, 1)",
+          "white":"#fff"
+        },
+        "background":{
+          "paper":"rgba(64, 64, 64, 1)",
+          "default":"rgba(0, 0, 0, 1)"
+        },
+        "primary":{
+          "light":"rgba(75, 75, 75, 1)",
+          "main":"rgba(32, 32, 32, 1)",
+          "dark":"rgba(21, 21, 21, 1)",
+          "contrastText":"#fff"
+        },
+        "secondary":{
+          "light":"rgba(111, 191, 115, 1)",
+          "main":"rgba(76, 175, 80, 1)",
+          "dark":"rgba(53, 122, 56, 1)",
+          "contrastText":"#fff"
+        },
+        "error":{
+          "light":"#e57373",
+          "main":"#f44336",
+          "dark":"#d32f2f",
+          "contrastText":"#fff"
+        },
+        "text":{
+          "primary":"rgba(255, 255, 255, 1)",
+          "secondary":"rgba(164, 164, 164, 1)",
+          "disabled":"rgba(0, 0, 0, 0.38)",
+          "hint":"rgba(0, 0, 0, 0.38)"
+        }
+      },
+    "themeName": "darkTheme"
+  }
+}

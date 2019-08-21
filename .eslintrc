@@ -29,6 +29,7 @@
     "strict": [2,"global"],
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-props-no-spreading": [0, { "html": "enforce", "custom": "ignore", "exceptions": ["img"] }],
     "import/no-dynamic-require": 0,
     "import/no-extraneous-dependencies": ["error", {"devDependencies": ["tools/**/*.js", "test/**/*.js"]}],
     "no-param-reassign": ["error", { "props": false }],

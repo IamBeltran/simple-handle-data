@@ -15,7 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { AuthContext } from '../../context/AuthContext';
-import { doSignInWithEmailAndPassword } from '../../libs/Firebase';
+import { doSignInWithEmailAndPassword } from '../../lib/Firebase';
 
 const styles = makeStyles(theme => ({
   paper: {

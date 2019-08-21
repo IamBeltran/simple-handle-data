@@ -21,7 +21,7 @@ import {
   Storage as StorageIcon,
 } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
-import handleworkbook from '../../libs/handleworkbook';
+import handleworkbook from '../../lib/handleworkbook';
 
 const { sheetToJSON, createWorkbook } = handleworkbook;
 

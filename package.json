@@ -2,7 +2,7 @@
   "name": "simple-handle-data",
   "version": "1.0.0",
   "private": false,
-  "description": "Repository with a boilerplate to develop applications with React and Electron",
+  "description": "Application for the simple handling of telephone or email records",
   "keywords": [
     "APP",
     "BOILERPLATE",

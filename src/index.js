@@ -1,5 +1,8 @@
+// ▶ Import react dependecies
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+// ▶ Import components
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';

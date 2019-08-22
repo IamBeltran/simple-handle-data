@@ -443,7 +443,7 @@ function phoneGetIFT(phoneParts) {
   if (!hasProperty(phoneParts, 'nir')) {
     throw new PhoneError(`Phone parts missing nir value`);
   }
-  if (!hasProperty(phoneParts, 'series')) {
+  if (!hasProperty(phoneParts, 'serie')) {
     throw new PhoneError('Phone parts missing series value');
   }
   if (!hasProperty(phoneParts, 'numeration')) {

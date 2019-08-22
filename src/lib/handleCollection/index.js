@@ -380,8 +380,8 @@ function filterCollectionEmail(collection) {
   if (isType(collection) !== 'array') {
     throw new HandleCollectionError('WRONG_TYPE_RECORDS');
   }
-  const validRecords = collection.filter(record => record.ok === true);
-  const invalidRecords = collection.filter(record => record.ok !== true);
+  const validRecords = collection.filter(record => record['VÁLIDO'] === true);
+  const invalidRecords = collection.filter(record => record['VÁLIDO'] !== true);
   return Object.assign({}, { valid: validRecords }, { invalid: invalidRecords });
 }
 
@@ -398,9 +398,13 @@ function filterCollectionPhone(collection) {
   if (isType(collection) !== 'array') {
     throw new HandleCollectionError('WRONG_TYPE_RECORDS');
   }
-  const match = collection.filter(record => record.ok === true && record.valid === true);
-  const notMatch = collection.filter(record => record.ok === true && record.valid === false);
-  const withoutFormat = collection.filter(record => record.ok !== true);
+  const match = collection.filter(
+    record => record['VÁLIDO'] === true && record.ENCONTRADO === true,
+  );
+  const notMatch = collection.filter(
+    record => record['VÁLIDO'] === true && record.ENCONTRADO === false,
+  );
+  const withoutFormat = collection.filter(record => record['VÁLIDO'] !== true);
   return Object.assign({}, { match }, { notMatch }, { withoutFormat });
 }
 

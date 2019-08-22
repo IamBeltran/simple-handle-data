@@ -51,11 +51,31 @@ const HandleWorkbookErrors = {
 };
 
 const columns = [
-  'A', 'B', 'C', 'D', 'E', // eslint-disable-line prettier/prettier
-  'F', 'G', 'H', 'I', 'J', // eslint-disable-line prettier/prettier
-  'K', 'L', 'M', 'N', 'O', // eslint-disable-line prettier/prettier
-  'P', 'Q', 'R', 'S', 'T', // eslint-disable-line prettier/prettier
-  'U', 'V', 'W', 'X', 'Y', // eslint-disable-line prettier/prettier
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
   'Z',
 ];
 

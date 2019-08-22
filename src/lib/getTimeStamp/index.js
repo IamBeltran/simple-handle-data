@@ -20,21 +20,19 @@
 const strings = [
   // * 0 Numbers 01 To 60
   '00_01_02_03_04_05_06_07_08_09_10_' +
-  '11_12_13_14_15_16_17_18_19_20_' + // eslint-disable-line prettier/prettier
-  '21_22_23_24_25_26_27_28_29_30_' + // eslint-disable-line prettier/prettier
-  '31_32_33_34_35_36_37_38_39_40_' + // eslint-disable-line prettier/prettier
-  '41_42_43_44_45_46_47_48_49_50_' + // eslint-disable-line prettier/prettier
-  '51_52_53_54_55_56_57_58_59_60',   // eslint-disable-line prettier/prettier
+    '11_12_13_14_15_16_17_18_19_20_' +
+    '21_22_23_24_25_26_27_28_29_30_' +
+    '31_32_33_34_35_36_37_38_39_40_' +
+    '41_42_43_44_45_46_47_48_49_50_' +
+    '51_52_53_54_55_56_57_58_59_60',
   // * 1 Months
   'Enero_Febrero_Marzo_Abril_Mayo_' +
-  'Junio_Julio_Agosto_Septiembre_'  + // eslint-disable-line prettier/prettier
-  'Octubre_Noviembre_Diciembre',      // eslint-disable-line prettier/prettier
+    'Junio_Julio_Agosto_Septiembre_' +
+    'Octubre_Noviembre_Diciembre',
   // * 2 Week Days
-  'Domingo_Lunes_Martes_Miércoles_' + // eslint-disable-line prettier/prettier
-  'Jueves_Viernes_Sábado',            // eslint-disable-line prettier/prettier
+  'Domingo_Lunes_Martes_Miércoles_Jueves_Viernes_Sábado',
   // * 3 Months Short
-  'Ene._Feb._Mar._Abr._May._Jun._'  + // eslint-disable-line prettier/prettier
-  'Jul._Ago._Sep._Oct._Nov._Dic.',    // eslint-disable-line prettier/prettier
+  'Ene._Feb._Mar._Abr._May._Jun._Jul._Ago._Sep._Oct._Nov._Dic.',
   // * 4 Week Days Short
   'Dom._Lun._Mar._Mié._Jue._Vie._Sáb.',
   // * 5 Week Days Short

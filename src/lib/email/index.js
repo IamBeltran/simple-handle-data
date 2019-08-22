@@ -241,7 +241,7 @@ async function emailGetAddressInfo(address) {
   return Object.assign(
     {},
     {
-      ORIGINAL: address,
+      EMAIL: address,
       ARREGLADO: hasFormatted,
       ARREGLO: addressFormatted,
       USUARIO: hasAt ? localPart : '',

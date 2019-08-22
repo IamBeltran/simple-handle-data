@@ -21,8 +21,8 @@ import { resolveMx } from 'dns';
 //  └───────────────────────────────────────────────────────────────────────────────────┘
 
 const EmailErrors = {
-  ADDRESS_MISSING: 'Missing value of Email Address',
-  WRONG_TYPE_ADDRESS: 'Wrong the type of email entry, it must be a string',
+  ADDRESS_MISSING: 'Falta el valor de la dirección de Email',
+  WRONG_TYPE_ADDRESS: 'Incorrecto el tipo de valor del Email, debe ser una cadena',
 };
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
@@ -227,29 +227,29 @@ async function emailGetAddressInfo(address) {
   const ok = isValidEmail;
 
   if (!hasAt) {
-    detail = 'Missing At';
+    detail = 'FALTA ARROBA';
   } else if (!isValidAddress && !isValidDomain) {
-    detail = 'local part and Domain are not valid';
+    detail = 'USUARIO Y DOMINIO NO SON VALIDOS';
   } else if (!isValidAddress && isValidDomain) {
-    detail = 'local part are not valid';
+    detail = 'USUARIO NO ES VALIDO';
   } else if (isValidAddress && !isValidDomain) {
-    detail = 'Domain are not valid';
+    detail = 'DOMINIO NO ES VALIDO';
   } else {
-    detail = 'none';
+    detail = 'NINGUNO';
   }
 
   return Object.assign(
     {},
     {
-      original: address,
-      hasFormatted,
-      addressFormatted,
-      localPart: hasAt ? localPart : '',
-      domain: hasAt ? domain : '',
-      validAddress,
-      validDomain,
-      detail,
-      ok,
+      ORIGINAL: address,
+      ARREGLADO: hasFormatted,
+      ARREGLO: addressFormatted,
+      USUARIO: hasAt ? localPart : '',
+      DOMINIO: hasAt ? domain : '',
+      'DIRECCIÓN VÁLIDA': validAddress,
+      'DOMINIO VÁLIDA': validDomain,
+      DETALLES: detail,
+      VÁLIDO: ok,
     },
   );
 }

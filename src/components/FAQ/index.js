@@ -15,6 +15,10 @@ import {
 } from '@material-ui/core/';
 import { ExpandMore as ExpandMoreIcon, MoreVert as MoreVertIcon } from '@material-ui/icons/';
 
+const {
+  update: { database },
+} = window.IFT;
+
 const useStyles = makeStyles(theme => ({
   card: {
     marginTop: theme.spacing(2),
@@ -53,13 +57,13 @@ const FAQ = () => {
                   <MoreVertIcon />
                 </IconButton>
               }
-              title="Preguntas frecuentes"
-              subheader="Última actualización: Abril 14, 2019"
+              title="Simple handle data:"
+              subheader={`Última actualización: ${database}`}
             />
             <CardContent>
               <Typography variant="body2" color="textSecondary" component="p">
-                This impressive paella is a perfect party dish and a fun meal to cook together with
-                your guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                Software para el manejo de bases de datos con información de teléfonos y correos
+                electrónicos
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -78,30 +82,38 @@ const FAQ = () => {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
-                <Typography paragraph>Method:</Typography>
-                <Typography paragraph>
-                  Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for
-                  10 minutes.
+                <Typography variant="h6" paragraph>
+                  Preguntas frecuentes:
                 </Typography>
                 <Typography paragraph>
-                  Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-                  medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally
-                  until lightly browned, 6 to 8 minutes. Transfer shrimp to a large plate and set
-                  aside, leaving chicken and chorizo in the pan. Add pimentón, bay leaves, garlic,
-                  tomatoes, onion, salt and pepper, and cook, stirring often until thickened and
-                  fragrant, about 10 minutes. Add saffron broth and remaining 4 1/2 cups chicken
-                  broth; bring to a boil.
+                  <b>¿Qué es una dupla?</b> En término de bases de datos, es una colección de
+                  registros una clave única y un solo campo de valor.
                 </Typography>
                 <Typography paragraph>
-                  Add rice and stir very gently to distribute. Top with artichokes and peppers, and
-                  cook without stirring, until most of the liquid is absorbed, 15 to 18 minutes.
-                  Reduce heat to medium-low, add reserved shrimp and mussels, tucking them down into
-                  the rice, and cook again without stirring, until mussels have opened and rice is
-                  just tender, 5 to 7 minutes more. (Discard any mussels that don’t open.)
+                  <b>¿Qué es una tupla?</b> Al igual que la dupla es una colección de registros con
+                  una clave única y varios campos de valor.
                 </Typography>
-                <Typography>
-                  Set aside off of the heat to let rest for 10 minutes, and then serve.
+                <Typography paragraph>
+                  <b>¿Qué tipos de archivos acepta el programa?</b> Solo acepta archivos de Excel
+                  con extensión .xlsx y .xls, algún otro archivo causara error al subirlo.
                 </Typography>
+                <Typography paragraph>
+                  <b>¿Qué características debe de tener el libro de Excel?</b> El libro solo deberá
+                  de tener una sola hoja de trabajo, el rango donde deberá iniciar la información es
+                  la celda A1, dependiendo del tipo de colección el número máximo de celdas tendrá
+                  un límite, es decir si se elige la opción de tipo <b>dupla</b> el rango máximo de
+                  columnas son <b>2</b>, la columna para el campo único (campo clave) y la columna
+                  con la información a depurar (teléfono o email), si se elige la opción{' '}
+                  <b>tupla</b> tiene un número máximo de <b>26</b>, la columna para el campo clave y
+                  un máximo de 25 celdas para añadir la información. A partir de las
+                  especificaciones anteriores se tiene claro las posibles causas de errores:
+                </Typography>
+                <ol>
+                  <li>Más de una hoja en el libro de Excel</li>
+                  <li>Un libro de Excel vacío</li>
+                  <li>Un libro que no empiece la información en la celda A1</li>
+                  <li>Una hoja de Excel que exceda las columnas permitidas</li>
+                </ol>
               </CardContent>
             </Collapse>
           </Card>

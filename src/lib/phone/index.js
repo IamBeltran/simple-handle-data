@@ -473,12 +473,22 @@ function phoneGetIFT(phoneParts) {
   if (!isValid) {
     return Object.assign(
       {},
-      { valid: isValid, mobile: '', population: '', township: '', state: '' },
+      { ENCONTRADO: isValid, MÓVIL: '', POBLACIÓN: '', MUNICIPIO: '', ESTADO: '' },
     );
   }
   // eslint-disable-next-line camelcase
+  // válido, móvil, población, municipio, estado
   const { mobile, population, township, state } = result[0];
-  return Object.assign({}, { valid: isValid, mobile, population, township, state });
+  return Object.assign(
+    {},
+    {
+      ENCONTRADO: isValid,
+      MÓVIL: mobile,
+      POBLACIÓN: population,
+      MUNICIPIO: township,
+      ESTADO: state,
+    },
+  );
 }
 
 /**
@@ -527,17 +537,14 @@ function phoneGetInfo(phone) {
   const ok = isValidFormat;
   return Object.assign(
     {},
-    // {
-    //   original: phone,
-    // },
-    isValidFormat ? { original: phone } : null,
-    !isValidFormat ? { phone } : null,
-    isValidFormat ? { hasFormatted } : null,
-    isValidFormat ? { phoneFormatted } : null,
+    isValidFormat ? { TELÉFONO: phone } : null,
+    !isValidFormat ? { TELÉFONO: phone } : null,
+    isValidFormat ? { ARREGLADO: hasFormatted } : null,
+    isValidFormat ? { ARREGLO: phoneFormatted } : null,
     IFT || null,
-    { detail: type },
-    { fixed: isFixed },
-    { ok },
+    { DETALLES: type },
+    { ARREGLO: isFixed },
+    { VÁLIDO: ok },
   );
 }
 

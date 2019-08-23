@@ -543,7 +543,7 @@ function phoneGetInfo(phone) {
     isValidFormat ? { ARREGLO: phoneFormatted } : null,
     IFT || null,
     { DETALLES: type },
-    { ARREGLO: isFixed },
+    { 'TIENE ARREGLO': isFixed },
     { VÁLIDO: ok },
   );
 }

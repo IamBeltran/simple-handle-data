@@ -38,16 +38,16 @@ const HandleWorkbookErrors = {
   UNDEFINED_TYPE_COLLECTION: 'The value of type collection is undefined',
   WRONG_TYPE_COLLECTION: 'The value of type collection is wrong, requiere a string',
   WRONG_NAME_COLLECTION: 'The name of type collection is wrong, the allowed are tuple or dupla',
-  MAX_SHEETS: '',
-  EMPTY_WORKBOOK: '',
-  WRONG_START_RANGE: '',
-  MAX_COLUMS_TUPLA: '',
-  MAX_COLUMS_DUPLA: '',
-  UNDEFINED_JSONDATA: '',
-  UNDEFINED_WORKBOOK_OPTIONS: '',
-  UNDEFINED_COLLECTION_OPTION: '',
-  UNDEFINED_DATA_OPTION: '',
-  WRONG_NAME_DATA: '',
+  MAX_SHEETS: 'SOLO SE PERMITE UNA HOJA EN EL LIBRO',
+  EMPTY_WORKBOOK: 'SE SUBIÓ UN LIBRO VACÍO',
+  WRONG_START_RANGE: 'LA INFORMACIÓN DEBE EMPEZAR EN LA CELDA A1',
+  MAX_COLUMS_TUPLA: 'SE EXCEDIERON EL NÚMERO DE COLUMNAS, MAXIMO 26',
+  MAX_COLUMS_DUPLA: 'SE EXCEDIERON EL NÚMERO DE COLUMNAS, MAXIMO 2',
+  UNDEFINED_JSONDATA: 'INDEFINIDA LA INFORMACIÓN',
+  UNDEFINED_WORKBOOK_OPTIONS: 'The value of workbook options is undefined',
+  UNDEFINED_COLLECTION_OPTION: 'The value of collection options is undefined',
+  UNDEFINED_DATA_OPTION: 'LA OPCIÓN DE DATO ES INDEFINIDO',
+  WRONG_NAME_DATA: 'NOMBRE DEL TIPO DE DATO ES INVÁLIDO',
 };
 
 const columns = [
@@ -307,8 +307,8 @@ function createWorkbook(JSONDATA, options) {
         const { valid, invalid } = records;
         const workSheetValid = XLSX.utils.json_to_sheet(valid);
         const workSheetInvalid = XLSX.utils.json_to_sheet(invalid);
-        XLSX.utils.book_append_sheet(workbook, workSheetValid, 'Valid Emails');
-        XLSX.utils.book_append_sheet(workbook, workSheetInvalid, 'Invalid Emails');
+        XLSX.utils.book_append_sheet(workbook, workSheetValid, 'Emails válidos');
+        XLSX.utils.book_append_sheet(workbook, workSheetInvalid, 'Emails inválidos');
       }
       if (collection === 'tuple' && data === 'phone') {
         records = groupValuesByKeyField(JSONDATA, 'id');
@@ -321,9 +321,9 @@ function createWorkbook(JSONDATA, options) {
         const workSheetMatch = XLSX.utils.json_to_sheet(match);
         const workSheetNotMatch = XLSX.utils.json_to_sheet(notMatch);
         const workSheetWithoutFormat = XLSX.utils.json_to_sheet(withoutFormat);
-        XLSX.utils.book_append_sheet(workbook, workSheetMatch, 'Valid Phones');
-        XLSX.utils.book_append_sheet(workbook, workSheetNotMatch, 'Invalid Phones');
-        XLSX.utils.book_append_sheet(workbook, workSheetWithoutFormat, 'Phones Without Format');
+        XLSX.utils.book_append_sheet(workbook, workSheetMatch, 'Teléfonos válidos');
+        XLSX.utils.book_append_sheet(workbook, workSheetNotMatch, 'Teléfonos inválidos');
+        XLSX.utils.book_append_sheet(workbook, workSheetWithoutFormat, 'Teléfonos sin formato');
       }
       if (collection === 'dupla' && data === 'email') {
         records = removeDuplicateDuplas(JSONDATA, 'id');
@@ -332,8 +332,8 @@ function createWorkbook(JSONDATA, options) {
         const { valid, invalid } = records;
         const workSheetValid = XLSX.utils.json_to_sheet(valid);
         const workSheetInvalid = XLSX.utils.json_to_sheet(invalid);
-        XLSX.utils.book_append_sheet(workbook, workSheetValid, 'Valid Emails');
-        XLSX.utils.book_append_sheet(workbook, workSheetInvalid, 'Invalid Emails');
+        XLSX.utils.book_append_sheet(workbook, workSheetValid, 'Emails válidos');
+        XLSX.utils.book_append_sheet(workbook, workSheetInvalid, 'Emails inválidos');
       }
       if (collection === 'dupla' && data === 'phone') {
         records = removeDuplicateDuplas(JSONDATA, 'id');
@@ -343,9 +343,9 @@ function createWorkbook(JSONDATA, options) {
         const workSheetMatch = XLSX.utils.json_to_sheet(match);
         const workSheetNotMatch = XLSX.utils.json_to_sheet(notMatch);
         const workSheetWithoutFormat = XLSX.utils.json_to_sheet(withoutFormat);
-        XLSX.utils.book_append_sheet(workbook, workSheetMatch, 'Valid Phones');
-        XLSX.utils.book_append_sheet(workbook, workSheetNotMatch, 'Invalid Phones');
-        XLSX.utils.book_append_sheet(workbook, workSheetWithoutFormat, 'Phones Without Format');
+        XLSX.utils.book_append_sheet(workbook, workSheetMatch, 'Teléfonos válidos');
+        XLSX.utils.book_append_sheet(workbook, workSheetNotMatch, 'Teléfonos inválidos');
+        XLSX.utils.book_append_sheet(workbook, workSheetWithoutFormat, 'Teléfonos sin format');
       }
       const timestamp = getTimestamp();
       const filename = `${timestamp}_${data}.xlsx`;

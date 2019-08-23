@@ -153,9 +153,6 @@ const CollectionForm = () => {
             <Typography component="h1" variant="h4" align="center">
               Checkout
             </Typography>
-            <div>collection: {typeCollection}</div>
-            <div>type data: {typeData}</div>
-            <div>error: {error}</div>
           </Grid>
         </Grid>
         <Divider className={classes.divider} />

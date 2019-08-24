@@ -9,11 +9,16 @@ import {
 } from '@material-ui/icons/';
 
 import { AuthContext } from '../../context/AuthContext';
+import { doSignOut } from '../../lib/Firebase';
 
 const MyToolbar = ({ classes, open, handleDrawerOpen, toggleTheme }) => {
   const { state, dispatch } = useContext(AuthContext);
   const { user } = state;
-  const signOut = () => dispatch({ type: 'SIGN_OUT' });
+  const signOut = () => {
+    doSignOut().then(() => {
+      dispatch({ type: 'SIGN_IN', payload: null });
+    });
+  };
 
   return (
     <Toolbar className={classes.toolbar}>

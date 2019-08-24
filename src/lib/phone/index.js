@@ -542,8 +542,8 @@ function phoneGetInfo(phone) {
     isValidFormat ? { ARREGLADO: hasFormatted } : null,
     isValidFormat ? { ARREGLO: phoneFormatted } : null,
     IFT || null,
-    { DETALLES: type },
-    { 'TIENE ARREGLO': isFixed },
+    !isValidFormat ? { DETALLES: type } : null,
+    !isValidFormat ? { 'TIENE ARREGLO': isFixed } : null,
     { VÁLIDO: ok },
   );
 }

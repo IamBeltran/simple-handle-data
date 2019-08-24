@@ -13,7 +13,7 @@ function authReducer(state, action) {
     case 'SIGN_OUT':
       return {
         ...state,
-        user: null,
+        user: action.payload,
       };
     default:
       return state;

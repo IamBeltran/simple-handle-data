@@ -41,6 +41,37 @@ const FAQ = () => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const tableStyle = {
+    width: '100%',
+    border: '1px solid #000',
+  };
+
+  const captionStyle = {
+    padding: '0.3em',
+    color: '#fff',
+    background: '#000',
+  };
+
+  const tdStyle = {
+    width: '25%',
+    'text-align': 'left',
+    'vertical-align': 'top',
+    border: '1px solid #000',
+    'border-collapse': 'collapse',
+    padding: '0.3em',
+    'caption-side': 'bottom',
+  };
+
+  const thStyle = {
+    width: '25%',
+    'text-align': 'center',
+    'vertical-align': 'top',
+    border: '1px solid #000',
+    'border-collapse': 'collapse',
+    padding: '0.3em',
+    'caption-side': 'bottom',
+  };
+
   return (
     <Container maxWidth="lg" className={classes.container}>
       <Grid container direction="column" justify="center" spacing={2}>
@@ -63,7 +94,7 @@ const FAQ = () => {
             <CardContent>
               <Typography variant="body2" color="textSecondary" component="p">
                 Software para el manejo de bases de datos con información de teléfonos y correos
-                electrónicos
+                electrónicos.
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -87,12 +118,67 @@ const FAQ = () => {
                 </Typography>
                 <Typography paragraph>
                   <b>¿Qué es una dupla?</b> En término de bases de datos, es una colección de
-                  registros una clave única y un solo campo de valor.
+                  registros una clave única y un solo campo de valor, en el siguiente ejemplo el
+                  numero de cuenta es la clave unica y el campo valor es el email, cada fila es un
+                  registro
                 </Typography>
+
+                <table style={tableStyle}>
+                  <caption style={captionStyle}>Ejemplo de Dupla</caption>
+                  <thead>
+                    <tr>
+                      <th style={thStyle}>No. cuenta</th>
+                      <th style={thStyle}>email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={tdStyle}>01</td>
+                      <td style={tdStyle}>email01@dominio.com</td>
+                    </tr>
+                    <tr>
+                      <td style={tdStyle}>02</td>
+                      <td style={tdStyle}>email02@dominio.com</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
+
                 <Typography paragraph>
                   <b>¿Qué es una tupla?</b> Al igual que la dupla es una colección de registros con
                   una clave única y varios campos de valor.
                 </Typography>
+
+                <table style={tableStyle}>
+                  <caption style={captionStyle}>Ejemplo de Tupla</caption>
+                  <thead>
+                    <tr>
+                      <th style={thStyle}>No. cuenta</th>
+                      <th style={thStyle}>telefono 01</th>
+                      <th style={thStyle}>telefono 02</th>
+                      <th style={thStyle}>telefono 03</th>
+                      <th style={thStyle}>telefono 04</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={tdStyle}>01</td>
+                      <td style={tdStyle}>0000000001</td>
+                      <td style={tdStyle}>0000000002</td>
+                      <td style={tdStyle}>0000000003</td>
+                      <td style={tdStyle}>0000000004</td>
+                    </tr>
+                    <tr>
+                      <td style={tdStyle}>02</td>
+                      <td style={tdStyle}>0000000001</td>
+                      <td style={tdStyle}>0000000002</td>
+                      <td style={tdStyle}>0000000003</td>
+                      <td style={tdStyle}>0000000004</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
+
                 <Typography paragraph>
                   <b>¿Qué tipos de archivos acepta el programa?</b> Solo acepta archivos de Excel
                   con extensión .xlsx y .xls, algún otro archivo causara error al subirlo.

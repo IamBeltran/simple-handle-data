@@ -142,6 +142,8 @@ const CollectionForm = () => {
 
   const { typeCollection, typeData, data, error } = state;
   const isInvalid = typeCollection === '' || typeData === '' || data.length === 0;
+  const hasData = data.length > 0;
+
   return (
     <Container maxWidth="lg" className={classes.container}>
       <Paper className={classes.paper}>
@@ -167,8 +169,18 @@ const CollectionForm = () => {
                 value={typeCollection}
                 onChange={onChange}
               >
-                <FormControlLabel value="dupla" control={<Radio />} label="Dupla" />
-                <FormControlLabel value="tuple" control={<Radio />} label="Tupla" />
+                <FormControlLabel
+                  value="dupla"
+                  disabled={hasData || error}
+                  control={<Radio />}
+                  label="Dupla"
+                />
+                <FormControlLabel
+                  value="tuple"
+                  disabled={hasData || error}
+                  control={<Radio />}
+                  label="Tupla"
+                />
               </RadioGroup>
             </FormControl>
           </Grid>
@@ -182,8 +194,18 @@ const CollectionForm = () => {
                 value={typeData}
                 onChange={onChange}
               >
-                <FormControlLabel value="email" control={<Radio />} label="E-mail" />
-                <FormControlLabel value="phone" control={<Radio />} label="Teléfono" />
+                <FormControlLabel
+                  value="email"
+                  disabled={hasData || error}
+                  control={<Radio />}
+                  label="E-mail"
+                />
+                <FormControlLabel
+                  value="phone"
+                  disabled={hasData || error}
+                  control={<Radio />}
+                  label="Teléfono"
+                />
               </RadioGroup>
             </FormControl>
           </Grid>
@@ -210,6 +232,7 @@ const CollectionForm = () => {
                 variant="contained"
                 component="span"
                 color="secondary"
+                disabled={hasData}
                 className={classes.button}
               >
                 Upload

@@ -195,8 +195,8 @@ const FAQ = () => {
                   especificaciones anteriores se tiene claro las posibles causas de errores:
                 </Typography>
                 <ol>
-                  <li>Más de una hoja en el libro de Excel</li>
                   <li>Un libro de Excel vacío</li>
+                  <li>Más de una hoja en el libro de Excel</li>
                   <li>Un libro que no empiece la información en la celda A1</li>
                   <li>Una hoja de Excel que exceda las columnas permitidas</li>
                 </ol>

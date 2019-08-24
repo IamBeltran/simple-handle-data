@@ -116,13 +116,14 @@ const FAQ = () => {
                 <Typography variant="h6" paragraph>
                   Preguntas frecuentes:
                 </Typography>
-                <Typography paragraph>
+                <Typography paragraph align="justify">
                   <b>¿Qué es una dupla?</b> En término de bases de datos, es una colección de
                   registros una clave única y un solo campo de valor, en el siguiente ejemplo el
                   numero de cuenta es la clave unica y el campo valor es el email, cada fila es un
                   registro
                 </Typography>
-
+                <br />
+                <br />
                 <table style={tableStyle}>
                   <caption style={captionStyle}>Ejemplo de Dupla</caption>
                   <thead>
@@ -143,12 +144,15 @@ const FAQ = () => {
                   </tbody>
                 </table>
                 <br />
+                <br />
 
-                <Typography paragraph>
+                <Typography paragraph align="justify">
                   <b>¿Qué es una tupla?</b> Al igual que la dupla es una colección de registros con
                   una clave única y varios campos de valor.
                 </Typography>
 
+                <br />
+                <br />
                 <table style={tableStyle}>
                   <caption style={captionStyle}>Ejemplo de Tupla</caption>
                   <thead>
@@ -178,27 +182,37 @@ const FAQ = () => {
                   </tbody>
                 </table>
                 <br />
+                <br />
 
-                <Typography paragraph>
+                <Typography paragraph align="justify">
+                  <b>NOTA:</b> En los ejemplos anteriores la columna &rdquo;No. cuenta&rdquo;
+                  representa el campo-clave (ID o Clave unica), las otras columnas son campos-valor,
+                  dependiendo del numero de campos-valor es el grado de una base de datos, cada fila
+                  representa un registro.
+                </Typography>
+
+                <Typography paragraph align="justify">
                   <b>¿Qué tipos de archivos acepta el programa?</b> Solo acepta archivos de Excel
                   con extensión .xlsx y .xls, algún otro archivo causara error al subirlo.
                 </Typography>
-                <Typography paragraph>
-                  <b>¿Qué características debe de tener el libro de Excel?</b> El libro solo deberá
-                  de tener una sola hoja de trabajo, el rango donde deberá iniciar la información es
-                  la celda A1, dependiendo del tipo de colección el número máximo de celdas tendrá
-                  un límite, es decir si se elige la opción de tipo <b>dupla</b> el rango máximo de
-                  columnas son <b>2</b>, la columna para el campo único (campo clave) y la columna
-                  con la información a depurar (teléfono o email), si se elige la opción{' '}
-                  <b>tupla</b> tiene un número máximo de <b>26</b>, la columna para el campo clave y
-                  un máximo de 25 celdas para añadir la información. A partir de las
-                  especificaciones anteriores se tiene claro las posibles causas de errores:
+                <Typography paragraph align="justify">
+                  <b>¿Qué características debe de tener el libro de Excel?</b> No se permiten{' '}
+                  <b>libros vacíos</b>, el libro solo deberá de tener <b>una hoja</b> de trabajo, el
+                  rango donde debe iniciar la información es la celda <b>A1</b>, dependiendo del
+                  tipo de colección el número máximo de celdas tendrá tendrá un límite, si se elige
+                  la opción de tipo <b>dupla</b> el rango máximo son <b>2 columnas</b>, la columna
+                  para el campo único (campo clave) y la columna con la información a depurar
+                  (teléfono o email), si se elige la opción <b>tupla</b> tiene un número máximo de{' '}
+                  <b>26 columnas</b>, la columna para el campo clave y un máximo de 25 celdas para
+                  añadir la información. A partir de las especificaciones anteriores se tiene claro
+                  las posibles causas de errores:
                 </Typography>
                 <ol>
-                  <li>Un libro de Excel vacío</li>
+                  <li>Archivos que no de Excel (.xlsx o .xls)</li>
+                  <li>Un libro de Excel vacío (Sin información)</li>
                   <li>Más de una hoja en el libro de Excel</li>
                   <li>Un libro que no empiece la información en la celda A1</li>
-                  <li>Una hoja de Excel que exceda las columnas permitidas</li>
+                  <li>Una hoja de Excel que exceda las columnas permitidas (2 o 26)</li>
                 </ol>
               </CardContent>
             </Collapse>

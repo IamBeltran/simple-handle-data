@@ -151,7 +151,7 @@ const CollectionForm = () => {
               <StorageIcon />
             </Avatar>
             <Typography component="h1" variant="h4" align="center">
-              Checkout
+              Opciones
             </Typography>
           </Grid>
         </Grid>

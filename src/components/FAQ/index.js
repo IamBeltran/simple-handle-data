@@ -54,22 +54,22 @@ const FAQ = () => {
 
   const tdStyle = {
     width: '25%',
-    'text-align': 'left',
-    'vertical-align': 'top',
+    textAlign: 'left',
+    verticalAlign: 'top',
     border: '1px solid #000',
-    'border-collapse': 'collapse',
+    borderCollapse: 'collapse',
     padding: '0.3em',
-    'caption-side': 'bottom',
+    captionSide: 'bottom',
   };
 
   const thStyle = {
     width: '25%',
-    'text-align': 'center',
-    'vertical-align': 'top',
+    textAlign: 'center',
+    verticalAlign: 'top',
     border: '1px solid #000',
-    'border-collapse': 'collapse',
+    borderCollapse: 'collapse',
     padding: '0.3em',
-    'caption-side': 'bottom',
+    captionSide: 'bottom',
   };
 
   return (

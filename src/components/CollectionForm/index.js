@@ -143,6 +143,7 @@ const CollectionForm = () => {
   const { typeCollection, typeData, data, error } = state;
   const isInvalid = typeCollection === '' || typeData === '' || data.length === 0;
   const hasData = data.length > 0;
+  const hasError = error !== '';
 
   return (
     <Container maxWidth="lg" className={classes.container}>
@@ -171,13 +172,13 @@ const CollectionForm = () => {
               >
                 <FormControlLabel
                   value="dupla"
-                  disabled={hasData || error}
+                  disabled={hasData || hasError}
                   control={<Radio />}
                   label="Dupla"
                 />
                 <FormControlLabel
                   value="tuple"
-                  disabled={hasData || error}
+                  disabled={hasData || hasError}
                   control={<Radio />}
                   label="Tupla"
                 />
@@ -196,13 +197,13 @@ const CollectionForm = () => {
               >
                 <FormControlLabel
                   value="email"
-                  disabled={hasData || error}
+                  disabled={hasData || hasError}
                   control={<Radio />}
                   label="E-mail"
                 />
                 <FormControlLabel
                   value="phone"
-                  disabled={hasData || error}
+                  disabled={hasData || hasError}
                   control={<Radio />}
                   label="Teléfono"
                 />

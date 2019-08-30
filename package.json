@@ -146,7 +146,7 @@
     ]
   },
   "build": {
-    "appId": "com.electron.reactronboilerplate",
+    "appId": "com.electron.simplehandledata",
     "productName": "simple-handle-data",
     "copyright": "Copyright © year 2019 ${author}",
     "artifactName": "${name}-${version}-${platform}.${ext}",

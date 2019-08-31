@@ -101,9 +101,9 @@ const CollectionForm = () => {
   const exportFile = async () => {
     const { data: JSONDATA, typeCollection: collection, typeData: data } = state;
     await createWorkbook(JSONDATA, { collection, data })
-      .then(workbook => {
-        const { wb, filename } = workbook;
-        XLSX.writeFile(wb, filename);
+      .then(result => {
+        const { workbook, filename } = result;
+        XLSX.writeFile(workbook, filename);
         setState({ ...INITIAL_STATE });
       })
       .catch(error => {
@@ -141,6 +141,7 @@ const CollectionForm = () => {
   };
 
   const { typeCollection, typeData, data, error } = state;
+  const hasSettings = typeCollection !== '' && typeData !== '';
   const isInvalid = typeCollection === '' || typeData === '' || data.length === 0;
   const hasData = data.length > 0;
   const hasError = error !== '';
@@ -233,7 +234,7 @@ const CollectionForm = () => {
                 variant="contained"
                 component="span"
                 color="secondary"
-                disabled={hasData}
+                disabled={hasData || !hasSettings}
                 className={classes.button}
               >
                 Upload

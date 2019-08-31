@@ -349,7 +349,7 @@ function createWorkbook(JSONDATA, options) {
       }
       const timestamp = getTimestamp();
       const filename = `${timestamp}_${data}.xlsx`;
-      return resolve({ wb: workbook, filename });
+      return resolve({ workbook, filename });
     } catch (error) {
       return reject(error);
     }

@@ -41,45 +41,31 @@ const styles = makeStyles(theme => ({
   },
 }));
 
-const INITIAL_STATE = {
-  email: '',
-  password: '',
-  error: null,
-};
-
 const SignInForm = props => {
   const classes = styles();
   const { dispatch } = useContext(AuthContext);
-  const [state, setState] = useState(INITIAL_STATE);
-
-  const onChange = event => {
-    const { target } = event;
-    const { value } = target;
-    const { name } = target;
-    setState({
-      ...state,
-      [name]: value,
-    });
-  };
+  const [errorLogin, setErrorLogin] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const onSubmit = event => {
     event.preventDefault();
     const { history } = props;
-    const { email, password } = state;
     doSignInWithEmailAndPassword(email, password)
       .then(user => {
         dispatch({ type: 'SIGN_IN', payload: user });
         history.push('/');
       })
       .catch(error => {
-        setState({ ...state, error });
+        setErrorLogin(error);
       });
   };
 
   const onDelete = () => {
-    setState({ ...INITIAL_STATE });
+    setEmail('');
+    setPassword('');
+    setErrorLogin(null);
   };
-  const { email, password, error } = state;
   const isInvalid = password === '' || email === '';
   return (
     <Container component="main" maxWidth="lg">
@@ -92,9 +78,9 @@ const SignInForm = props => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            {error && (
+            {errorLogin && (
               <Chip
-                label={error}
+                label={errorLogin}
                 variant="outlined"
                 onDelete={onDelete}
                 className={classes.chip}
@@ -112,7 +98,7 @@ const SignInForm = props => {
                 name="email"
                 value={email}
                 autoComplete="email"
-                onChange={onChange}
+                onChange={event => setEmail(event.target.value)}
                 autoFocus
               />
               <TextField
@@ -126,7 +112,7 @@ const SignInForm = props => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={onChange}
+                onChange={event => setPassword(event.target.value)}
               />
               <Button
                 type="submit"

@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import CollectionForm from '../components/CollectionForm';
 import FAQ from '../components/FAQ';
-import SignInForm from '../components/SignInForm';
+import Login from '../components/Login';
 import ProtectedRoute from './ProtectedRoute';
 
 const ReactRouter = () => {
@@ -11,7 +11,7 @@ const ReactRouter = () => {
       <Switch>
         <ProtectedRoute exact path="/" component={CollectionForm} />
         <ProtectedRoute exact path="/faq" component={FAQ} />
-        <Route exact path="/signinform" component={SignInForm} />
+        <Route exact path="/login" component={Login} />
       </Switch>
     </React.Fragment>
   );

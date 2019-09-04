@@ -16,7 +16,7 @@ const MyToolbar = ({ classes, open, handleDrawerOpen, toggleTheme }) => {
   const { user } = state;
   const signOut = () => {
     doSignOut().then(() => {
-      dispatch({ type: 'SIGN_IN', payload: null });
+      dispatch({ type: 'SIGN_OUT', payload: null });
     });
   };
 

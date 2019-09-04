@@ -10,7 +10,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
       <Route
         {...rest}
         render={props =>
-          user ? <Component {...props} /> : <Redirect to={{ pathname: '/signinform' }} />
+          user ? <Component {...props} /> : <Redirect to={{ pathname: '/login' }} />
         }
       />
     </React.Fragment>

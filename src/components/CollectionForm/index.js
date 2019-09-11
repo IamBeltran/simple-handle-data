@@ -14,6 +14,7 @@ import {
   FormControlLabel,
   Button,
   Chip,
+  LinearProgress,
 } from '@material-ui/core/';
 import {
   CloudUpload as CloudUploadIcon,
@@ -25,6 +26,8 @@ import handleworkbook from '../../lib/handleWorkbook';
 
 const { sheetToJSON, createWorkbook } = handleworkbook;
 
+// eslint-disable-next-line no-useless-escape
+const regexWoorBook = /([a-zA-Z0-9\s_\\.\-\(\):])+(.xlsx|.xls)$/;
 const SheetJSFT = ['xlsx', 'xls'].map(x => `.${x}`).join(',');
 
 const styles = makeStyles(theme => ({
@@ -64,17 +67,24 @@ const styles = makeStyles(theme => ({
   },
 }));
 
-const INITIAL_STATE = {
-  typeCollection: '',
-  typeData: '',
-  file: '',
-  data: [],
-  error: '',
-};
-
 const CollectionForm = () => {
   const classes = styles();
-  const [state, setState] = useState(INITIAL_STATE);
+  const [error, setError] = useState(null);
+  const [collection, setCollection] = useState('');
+  const [type, setType] = useState('');
+  const [data, setData] = useState([]);
+  const [hasFile, setHasFile] = useState(null);
+  const [load, setload] = useState(false);
+  const [inputKey, setInputKey] = useState(Date.now());
+
+  const resetState = () => {
+    setError(null);
+    setCollection('');
+    setType('');
+    setHasFile(null);
+    setData([]);
+    setInputKey(Date.now());
+  };
 
   const handleFile = async file => {
     // Boilerplate to set up FileReader
@@ -82,69 +92,60 @@ const CollectionForm = () => {
     const rABS = !!reader.readAsBinaryString;
     reader.onload = e => {
       // Parse data
-      const { typeCollection } = state;
       const bstr = e.target.result;
       const workbook = XLSX.read(bstr, { type: rABS ? 'binary' : 'array' });
-      sheetToJSON(workbook, typeCollection)
-        .then(data => {
-          setState({ ...state, data });
+      sheetToJSON(workbook, collection)
+        .then(result => {
+          setData(result);
         })
-        .catch(error => {
-          const { message } = error;
-          setState({ ...state, error: message });
+        .catch(err => {
+          const { message } = err;
+          setError(message);
         });
+    };
+    reader.onloadstart = () => {
+      setload(true);
+    };
+    reader.onloadend = () => {
+      setload(false);
     };
     if (rABS) reader.readAsBinaryString(file);
     else reader.readAsArrayBuffer(file);
   };
 
   const exportFile = async () => {
-    const { data: JSONDATA, typeCollection: collection, typeData: data } = state;
-    await createWorkbook(JSONDATA, { collection, data })
+    await createWorkbook(data, { collection, data: type })
       .then(result => {
         const { workbook, filename } = result;
-        XLSX.writeFile(workbook, filename);
-        setState({ ...INITIAL_STATE });
+        if (XLSX.writeFile(workbook, filename)) {
+          resetState();
+        }
       })
-      .catch(error => {
-        const { message } = error;
-        setState({ ...state, error: message });
+      .catch(err => {
+        const { message } = err;
+        setError(message);
       });
   };
 
-  const onChange = event => {
-    const { target } = event;
-    const { value, name, files } = target;
-    setState({
-      ...state,
-      [name]: value,
-    });
-    if (files && files[0]) {
-      const nameFile = files[0].name;
-      // eslint-disable-next-line no-useless-escape
-      const regexWoorBook = /([a-zA-Z0-9\s_\\.\-\(\):])+(.xlsx|.xls)$/;
+  const uploadFile = async fileList => {
+    if (collection !== '' && type !== '' && fileList && fileList[0]) {
+      const nameFile = fileList[0].name;
       const isWoorBook = regexWoorBook.test(nameFile);
       if (!isWoorBook) {
-        setState({
-          ...state,
-          error: 'Archivo invalido, solo se aceptan archivos con extensión  .xlsx o .xls',
-        });
+        setError('Archivo invalido, solo se aceptan archivos con extensión  .xlsx o .xls');
       }
       if (isWoorBook) {
-        handleFile(files[0]);
+        setHasFile(true);
+        handleFile(fileList[0]);
       }
     }
   };
 
-  const onDelete = () => {
-    setState({ ...INITIAL_STATE });
-  };
-
-  const { typeCollection, typeData, data, error } = state;
-  const hasSettings = typeCollection !== '' && typeData !== '';
-  const isInvalid = typeCollection === '' || typeData === '' || data.length === 0;
+  const hasSettings = collection !== '' && type !== '';
   const hasData = data.length > 0;
-  const hasError = error !== '';
+  const disableRadio = hasData || error || hasFile || load;
+  const disableUpload = hasData || !hasSettings || load || error;
+  const disableDownload = !hasSettings || !hasData;
 
   return (
     <Container maxWidth="lg" className={classes.container}>
@@ -159,7 +160,10 @@ const CollectionForm = () => {
             </Typography>
           </Grid>
         </Grid>
+        {load && <br />}
+        {load && <LinearProgress color="secondary" />}
         <Divider className={classes.divider} />
+
         <Grid container direction="row" spacing={2}>
           <Grid item xs={12} sm={4}>
             <FormControl component="fieldset" className={classes.formControl}>
@@ -168,18 +172,18 @@ const CollectionForm = () => {
                 aria-label="Tipo de colección"
                 name="typeCollection"
                 className={classes.group}
-                value={typeCollection}
-                onChange={onChange}
+                value={collection}
+                onChange={event => setCollection(event.target.value)}
               >
                 <FormControlLabel
                   value="dupla"
-                  disabled={hasData || hasError}
+                  disabled={disableRadio}
                   control={<Radio />}
                   label="Dupla"
                 />
                 <FormControlLabel
                   value="tuple"
-                  disabled={hasData || hasError}
+                  disabled={disableRadio}
                   control={<Radio />}
                   label="Tupla"
                 />
@@ -193,18 +197,18 @@ const CollectionForm = () => {
                 aria-label="Tipo de datos"
                 name="typeData"
                 className={classes.group}
-                value={typeData}
-                onChange={onChange}
+                value={type}
+                onChange={event => setType(event.target.value)}
               >
                 <FormControlLabel
                   value="email"
-                  disabled={hasData || hasError}
+                  disabled={disableRadio}
                   control={<Radio />}
                   label="E-mail"
                 />
                 <FormControlLabel
                   value="phone"
-                  disabled={hasData || hasError}
+                  disabled={disableRadio}
                   control={<Radio />}
                   label="Teléfono"
                 />
@@ -227,14 +231,15 @@ const CollectionForm = () => {
                 id="contained-button-file"
                 type="file"
                 name="file"
-                onChange={onChange}
+                key={inputKey}
+                onChange={event => uploadFile(event.target.files)}
               />
               <Button
                 fullWidth
                 variant="contained"
                 component="span"
                 color="secondary"
-                disabled={hasData || !hasSettings}
+                disabled={disableUpload}
                 className={classes.button}
               >
                 Upload
@@ -246,7 +251,7 @@ const CollectionForm = () => {
               type="button"
               variant="contained"
               color="secondary"
-              disabled={isInvalid}
+              disabled={disableDownload}
               className={classes.submit}
               onClick={exportFile}
             >
@@ -261,7 +266,7 @@ const CollectionForm = () => {
             <Chip
               label={error}
               variant="outlined"
-              onDelete={onDelete}
+              onDelete={resetState}
               className={classes.chip}
               color="secondary"
             />

@@ -4,6 +4,10 @@
     "prettier",
     "prettier/react"
   ],
+  "plugins": [
+    "react",
+    "prettier"
+  ],
   "parser": "babel-eslint",
   "parserOptions": {
       "ecmaFeatures": {
@@ -41,9 +45,5 @@
         "trailingComma": "all"
       }
     ]
-  },
-  "plugins": [
-    "react",
-    "prettier"
-  ]
+  }
 }

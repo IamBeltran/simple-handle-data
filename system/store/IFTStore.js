@@ -24,7 +24,7 @@ const {
 //  └───────────────────────────────────────────────────────────────────────────────────┘
 // const serialize = value => JSON.stringify(value);
 const serialize = value => JSON.stringify(value, null, 2);
-// const encryptionKey = "oiV32mVp5lOwYneFESjrWq2xFByNOvNj";
+const encryptionKey = 'oiV32mVp5lOwYneFESjrWq2xFByNOvNj';
 const IFTSchema = {
   IFT: {
     type: 'object',
@@ -94,7 +94,7 @@ const IFTSchema = {
  */
 class IFTStore extends Store {
   constructor() {
-    super({ name: 'IFTStore', schema: IFTSchema, serialize });
+    super({ name: 'IFTStore', schema: IFTSchema, serialize, encryptionKey });
     const updateIFT = this.get('IFT.update.IFT') || null;
     const updateDB = this.get('IFT.update.database') || null;
     this.hasStore = !!this.get('IFT');

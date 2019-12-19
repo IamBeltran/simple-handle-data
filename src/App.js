@@ -7,7 +7,6 @@ import Layout from './components/Layout';
 import { AuthProvider } from './context/AuthContext';
 
 const App = () => {
-  // the mui theme is used in the themeProvider.
   return (
     <AuthProvider>
       <Router>

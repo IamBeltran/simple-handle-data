@@ -1,8 +1,13 @@
+// ▶ Import react dependecies
 import React from 'react';
 import PropTypes from 'prop-types';
+
+// ▶ Import material-ui components
 import { Link as RouterLink } from 'react-router-dom';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { Storage as StorageIcon, Help as HelpIcon } from '@material-ui/icons';
+
+// ▶ Import NavigationItems
+import NavigationItems from './NavigationItems';
 
 const Link = React.forwardRef((props, ref) => <RouterLink {...props} innerRef={ref} />);
 
@@ -27,8 +32,9 @@ ListItemLink.propTypes = {
 const Navigation = () => {
   return (
     <React.Fragment key="navigation">
-      <ListItemLink to="/" primary="Subir registros" icon={<StorageIcon />} />
-      <ListItemLink to="/faq" primary="F.A.Q." icon={<HelpIcon />} />
+      {NavigationItems.map((item, index) => (
+        <ListItemLink key={index.toString()} to={item.to} primary={item.primary} icon={item.icon} />
+      ))}
     </React.Fragment>
   );
 };

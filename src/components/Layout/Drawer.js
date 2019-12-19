@@ -1,10 +1,20 @@
+// ▶ Import react dependencies
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+
+// ▶ Import clx dependency
 import clsx from 'clsx';
+
+// ▶ Import material-ui components
 import { Drawer, IconButton, Divider, List } from '@material-ui/core/';
+
+// ▶ Import material-ui icons
 import { ChevronLeft as ChevronLeftIcon } from '@material-ui/icons/';
 
+// ▶ Import components
 import Navigation from './Navigation';
+
+// ▶ Import AuthContext
 import { AuthContext } from '../../context/AuthContext';
 
 const MyDrawer = ({ classes, open, handleDrawerClose }) => {

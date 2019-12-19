@@ -1,17 +1,24 @@
+// ▶ Import react dependecies
 import React, { useState } from 'react';
-import clsx from 'clsx';
-import { makeStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { AppBar, CssBaseline } from '@material-ui/core/';
 
-import ToolBar from './ToolBar';
+// ▶ Import material-ui components
+import { CssBaseline } from '@material-ui/core/';
+import { makeStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+// ▶ Import components
+import AppBar from './AppBar';
 import Drawer from './Drawer';
+
+// ▶ Import ReactRouter
 import ReactRouter from '../../containers/ReactRouter';
 
 import themes from './themes.json';
 
+// ▶ Make styles
 const drawerWidth = 240;
 
 const { defaultTheme, darkTheme } = themes;
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -31,26 +38,16 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  menuButton: {
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    overflow: 'auto',
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
-  },
-  title: {
-    flexGrow: 1,
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
   },
   drawerClose: {
     transition: theme.transitions.create('width', {
@@ -63,20 +60,28 @@ const useStyles = makeStyles(theme => ({
       width: theme.spacing(9) + 1,
     },
   },
-  appBarSpacer: theme.mixins.toolbar,
-  toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
-  toolbarIcon: {
+  hide: {
+    display: 'none',
+  },
+  menuButton: {
+    marginRight: 36,
+  },
+  title: {
+    flexGrow: 1,
+  },
+  toolbar: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    padding: '0 8px',
+    padding: theme.spacing(0, 3),
     ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
   },
 }));
 const Layout = () => {
@@ -120,34 +125,33 @@ const Layout = () => {
   }
 
   return (
-    <React.Fragment key="layout">
-      <MuiThemeProvider theme={muiTheme}>
-        <div className={classes.root}>
-          <CssBaseline />
-          <AppBar
-            position="fixed"
-            className={clsx(classes.appBar, {
-              [classes.appBarShift]: open,
-            })}
-          >
-            <ToolBar
-              classes={classes}
-              open={open}
-              handleDrawerOpen={handleDrawerOpen}
-              toggleTheme={toggleTheme}
-            />
-          </AppBar>
-          <Drawer classes={classes} open={open} handleDrawerClose={handleDrawerClose} />
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            <div className={classes.appBarSpacer} />
-            {/* SECTION ReactRouter */}
-            <ReactRouter />
-            {/* !SECTION ReactRouter */}
-          </main>
-        </div>
-      </MuiThemeProvider>
-    </React.Fragment>
+    <MuiThemeProvider theme={muiTheme}>
+      <div className={classes.root}>
+        <CssBaseline />
+        {/* SECTION MyAppBar */}
+        <AppBar
+          classes={classes}
+          handleDrawerOpen={handleDrawerOpen}
+          toggleTheme={toggleTheme}
+          open={open}
+        />
+        {/* !SECTION */}
+
+        {/* SECTION MyDrawer */}
+        <Drawer classes={classes} handleDrawerClose={handleDrawerClose} open={open} />
+        {/* !SECTION */}
+
+        {/* SECTION main */}
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+
+          {/* SECTION ReactRouter */}
+          <ReactRouter />
+          {/* !SECTION */}
+        </main>
+        {/* !SECTION */}
+      </div>
+    </MuiThemeProvider>
   );
 };
 

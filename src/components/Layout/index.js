@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 // ▶ Import material-ui components
 import { CssBaseline } from '@material-ui/core/';
 import { makeStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { blue, cyan } from '@material-ui/core/colors/';
 
 // ▶ Import components
 import AppBar from './AppBar';
@@ -12,12 +13,8 @@ import Drawer from './Drawer';
 // ▶ Import ReactRouter
 import ReactRouter from '../../containers/ReactRouter';
 
-import themes from './themes.json';
-
 // ▶ Make styles
 const drawerWidth = 240;
-
-const { defaultTheme, darkTheme } = themes;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -84,16 +81,32 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar,
   },
 }));
+
 const Layout = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState('default');
+  const [theme, setTheme] = useState({
+    palette: {
+      primary: blue,
+      secondary: cyan,
+      type: 'light',
+    },
+  });
 
-  // we change the palette type of the theme in state
+  // » We change the palette type of the theme in state
   const toggleTheme = () => {
-    const newTheme = theme === 'default' ? 'dark' : 'default';
-    setTheme(newTheme);
+    const NEW_TYPE = theme.palette.type === 'light' ? 'dark' : 'light';
+    setTheme({
+      palette: {
+        primary: blue,
+        secondary: cyan,
+        type: NEW_TYPE,
+      },
+    });
   };
+
+  // » We generate a MUI-theme from state's theme object
+  const muiTheme = createMuiTheme(theme);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -102,27 +115,6 @@ const Layout = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-  let muiTheme;
-
-  // we generate a MUI-theme from state's theme object
-  switch (theme) {
-    case 'default':
-      muiTheme = createMuiTheme({
-        palette: defaultTheme.palette,
-        themeName: defaultTheme.themeName,
-      });
-      break;
-    case 'dark':
-      muiTheme = createMuiTheme({
-        palette: darkTheme.palette,
-        themeName: darkTheme.themeName,
-      });
-      break;
-    default:
-      muiTheme = createMuiTheme();
-      break;
-  }
 
   return (
     <MuiThemeProvider theme={muiTheme}>

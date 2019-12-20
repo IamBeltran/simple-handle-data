@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 // ▶ Import material-ui components
 import { CssBaseline } from '@material-ui/core/';
 import { makeStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { blue, cyan } from '@material-ui/core/colors/';
 
 // ▶ Import components
 import AppBar from './AppBar';
@@ -87,8 +86,12 @@ const Layout = () => {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState({
     palette: {
-      primary: blue,
-      secondary: cyan,
+      primary: {
+        main: '#eceff1',
+      },
+      secondary: {
+        main: '#43a047',
+      },
       type: 'light',
     },
   });
@@ -98,8 +101,12 @@ const Layout = () => {
     const NEW_TYPE = theme.palette.type === 'light' ? 'dark' : 'light';
     setTheme({
       palette: {
-        primary: blue,
-        secondary: cyan,
+        primary: {
+          main: '#eceff1',
+        },
+        secondary: {
+          main: '#43a047',
+        },
         type: NEW_TYPE,
       },
     });

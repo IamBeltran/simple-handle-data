@@ -56,6 +56,14 @@ const MyAppBar = props => {
         <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
           {titleProyect}
         </Typography>
+        <IconButton
+          color="inherit"
+          aria-label="Cambiar de tema"
+          title="Cambiar de tema"
+          onClick={toggleTheme}
+        >
+          <InvertColorsIcon />
+        </IconButton>
         {user ? (
           <IconButton
             color="inherit"
@@ -66,14 +74,6 @@ const MyAppBar = props => {
             <AccountCircleIcon />
           </IconButton>
         ) : null}
-        <IconButton
-          color="inherit"
-          aria-label="Cambiar de tema"
-          title="Cambiar de tema"
-          onClick={toggleTheme}
-        >
-          <InvertColorsIcon />
-        </IconButton>
       </Toolbar>
     </AppBar>
   );

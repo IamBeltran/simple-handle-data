@@ -52,8 +52,16 @@ const AuthProvider = props => {
       });
   }
 
+  async function clearSignupError() {
+    setSignupError(null);
+  }
+
   async function clearLoginError() {
     setLoginError(null);
+  }
+
+  async function clearLogoutError() {
+    setLogoutError(null);
   }
 
   const value = useMemo(() => {
@@ -65,7 +73,9 @@ const AuthProvider = props => {
       signup,
       login,
       logout,
+      clearSignupError,
       clearLoginError,
+      clearLogoutError,
     };
   }, [user, signupError, loginError, logoutError]);
 

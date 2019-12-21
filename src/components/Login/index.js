@@ -1,5 +1,5 @@
 // ▶ Import react dependecies
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -19,8 +19,8 @@ import {
 // ▶ Import material-ui icons
 import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons/';
 
-import { AuthContext } from '../../context/AuthContext';
-import { doSignInWithEmailAndPassword } from '../../lib/Firebase';
+// ▶ Import AuthContext
+import { useAuthConsumer } from '../../context/AuthContext';
 
 // ▶ Make styles
 const useStyles = makeStyles(theme => ({
@@ -53,30 +53,25 @@ const useStyles = makeStyles(theme => ({
 
 const SignInForm = props => {
   const classes = useStyles();
-  const { dispatch } = useContext(AuthContext);
-  const [errorLogin, setErrorLogin] = useState(null);
+  const { login, loginError, clearLoginError } = useAuthConsumer();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onSubmit = event => {
     event.preventDefault();
     const { history } = props;
-    doSignInWithEmailAndPassword(email, password)
-      .then(user => {
-        dispatch({ type: 'SIGN_IN', payload: user });
-        history.push('/');
-      })
-      .catch(error => {
-        setErrorLogin(error);
-      });
+    login(email, password).then(() => {
+      history.push('/');
+    });
   };
 
   const onDelete = () => {
     setEmail('');
     setPassword('');
-    setErrorLogin(null);
+    clearLoginError();
   };
-  const isInvalid = password === '' || email === '';
+
+  const isDisabled = password === '' || email === '';
   return (
     <Container maxWidth="lg" className={classes.container}>
       <Grid container direction="column">
@@ -88,9 +83,9 @@ const SignInForm = props => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            {errorLogin && (
+            {loginError && (
               <Chip
-                label={errorLogin}
+                label={loginError}
                 variant="outlined"
                 onDelete={onDelete}
                 className={classes.chip}
@@ -132,7 +127,7 @@ const SignInForm = props => {
                 fullWidth
                 variant="contained"
                 color="secondary"
-                disabled={isInvalid}
+                disabled={isDisabled}
                 className={classes.submit}
               >
                 Sign In

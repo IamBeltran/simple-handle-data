@@ -37,7 +37,7 @@ const MyExpansionPanel = props => {
   const classes = useStyles();
   const { expanded, handleChange } = props;
   const captionStyle = {
-    background: '#000000',
+    background: '#43a047',
     color: '#FFFFFF',
     padding: '10px',
   };
@@ -90,10 +90,10 @@ const MyExpansionPanel = props => {
             </TableBody>
           </Table>
           <Typography paragraph align="justify">
-            <b>NOTA:</b> En los ejemplos anteriores la columna ”No. cuenta” representa el
-            campo-clave (ID o Clave unica), las otras columnas son campos-valor, dependiendo del
-            numero de campos-valor es el grado de una base de datos, cada fila representa un
-            registro.
+            <b>NOTA:</b> En los ejemplos anteriores tanto en el de dupla y tupla, la columna ”No.
+            cuenta” representa el campo-clave (ID o Clave unica), las otras columnas son
+            campos-valor, dependiendo del numero de campos-valor es el grado de una base de datos,
+            cada fila representa un registro.
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>

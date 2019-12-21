@@ -37,7 +37,7 @@ const MyExpansionPanel = props => {
   const classes = useStyles();
   const { expanded, handleChange } = props;
   const captionStyle = {
-    background: '#000000',
+    background: '#43a047',
     color: '#FFFFFF',
     padding: '10px',
   };

@@ -1,5 +1,6 @@
 // ▶ Import react dependecies
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // ▶ Import material-ui components
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,12 +25,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MyExpansionPanel = () => {
+const MyExpansionPanel = props => {
   const classes = useStyles();
+  const { expanded, handleChange } = props;
 
   return (
     <React.Fragment key="panel4a-content">
-      <ExpansionPanel>
+      <ExpansionPanel expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel4a-content"
@@ -48,6 +50,11 @@ const MyExpansionPanel = () => {
       </ExpansionPanel>
     </React.Fragment>
   );
+};
+
+MyExpansionPanel.propTypes = {
+  expanded: PropTypes.bool.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default MyExpansionPanel;

@@ -1,5 +1,5 @@
 // ▶ Import react dependecies
-import React from 'react';
+import React, { useState } from 'react';
 
 // ▶ Import material-ui components
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,16 +26,21 @@ const useStyles = makeStyles(theme => ({
 
 const CollectionForm = () => {
   const classes = useStyles();
+  const [expanded, setExpanded] = useState(false);
+
+  const handleChange = panel => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
   return (
     <Container maxWidth="lg" className={classes.container}>
       <Grid container direction="column">
         <Grid item>
           <Paper className={classes.paper}>
-            <ExpansionPanel01 />
-            <ExpansionPanel02 />
-            <ExpansionPanel03 />
-            <ExpansionPanel04 />
-            <ExpansionPanel05 />
+            <ExpansionPanel01 expanded={expanded} handleChange={handleChange} />
+            <ExpansionPanel02 expanded={expanded} handleChange={handleChange} />
+            <ExpansionPanel03 expanded={expanded} handleChange={handleChange} />
+            <ExpansionPanel04 expanded={expanded} handleChange={handleChange} />
+            <ExpansionPanel05 expanded={expanded} handleChange={handleChange} />
           </Paper>
         </Grid>
       </Grid>

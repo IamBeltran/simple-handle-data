@@ -1,5 +1,5 @@
 // ▶ Import react dependencies
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // ▶ Import clx dependency
@@ -15,11 +15,10 @@ import { ChevronLeft as ChevronLeftIcon } from '@material-ui/icons/';
 import Navigation from './Navigation';
 
 // ▶ Import AuthContext
-import { AuthContext } from '../../context/AuthContext';
+import { useAuthConsumer } from '../../context/AuthContext';
 
 const MyDrawer = ({ classes, open, handleDrawerClose }) => {
-  const { state } = useContext(AuthContext);
-  const { user } = state;
+  const { user } = useAuthConsumer(useAuthConsumer);
   return (
     <React.Fragment key="drawer">
       {user ? (

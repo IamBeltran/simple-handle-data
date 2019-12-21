@@ -1,5 +1,5 @@
 // ▶ Import react dependencies
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // ▶ Import clx dependency
@@ -16,20 +16,15 @@ import {
 } from '@material-ui/icons/';
 
 // ▶ Import AuthContext
-import { AuthContext } from '../../context/AuthContext';
-
-// ▶ Import Firebase
-import { doSignOut } from '../../lib/Firebase';
+import { useAuthConsumer } from '../../context/AuthContext';
 
 const MyAppBar = props => {
   const titleProyect = 'SIMPLE HANDLE DATA';
   const { classes, handleDrawerOpen, open, toggleTheme } = props;
-  const { state, dispatch } = useContext(AuthContext);
-  const { user } = state;
-  const signOut = () => {
-    doSignOut().then(() => {
-      dispatch({ type: 'SIGN_OUT', payload: null });
-    });
+  const { user, logout } = useAuthConsumer();
+
+  const doLogout = () => {
+    logout();
   };
   return (
     <AppBar
@@ -69,7 +64,7 @@ const MyAppBar = props => {
             color="inherit"
             aria-label="Cerrar sesión"
             title="Cerrar sesión"
-            onClick={signOut}
+            onClick={doLogout}
           >
             <AccountCircleIcon />
           </IconButton>

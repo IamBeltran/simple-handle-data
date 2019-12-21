@@ -1,29 +1,39 @@
+// ▶ Import react dependecies
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+
+// ▶ Import material-ui components
+import { makeStyles } from '@material-ui/core/styles';
 import {
-  Typography,
-  Container,
-  Paper,
-  Grid,
   Avatar,
   Button,
-  TextField,
   Chip,
-} from '@material-ui/core/';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { makeStyles } from '@material-ui/core/styles';
+  Container,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+} from '@material-ui/core';
+
+// ▶ Import material-ui icons
+import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons/';
 
 import { AuthContext } from '../../context/AuthContext';
 import { doSignInWithEmailAndPassword } from '../../lib/Firebase';
 
-const styles = makeStyles(theme => ({
+// ▶ Make styles
+const useStyles = makeStyles(theme => ({
+  container: {
+    padding: theme.spacing(0),
+  },
   paper: {
-    marginTop: theme.spacing(2),
+    padding: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: theme.spacing(4),
+    minHeight: '100vh',
+    color: theme.palette.text.primary,
   },
   avatar: {
     margin: theme.spacing(1),
@@ -42,7 +52,7 @@ const styles = makeStyles(theme => ({
 }));
 
 const SignInForm = props => {
-  const classes = styles();
+  const classes = useStyles();
   const { dispatch } = useContext(AuthContext);
   const [errorLogin, setErrorLogin] = useState(null);
   const [email, setEmail] = useState('');
@@ -68,9 +78,9 @@ const SignInForm = props => {
   };
   const isInvalid = password === '' || email === '';
   return (
-    <Container component="main" maxWidth="lg">
-      <Grid container direction="column" justify="center" spacing={2}>
-        <Grid item xs={12}>
+    <Container maxWidth="lg" className={classes.container}>
+      <Grid container direction="column">
+        <Grid item>
           <Paper className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
@@ -87,32 +97,35 @@ const SignInForm = props => {
                 color="secondary"
               />
             )}
-            <form className={classes.form} onSubmit={onSubmit} noValidate>
+            <form className={classes.form} onSubmit={onSubmit} noValidate autoComplete="off">
               <TextField
+                color="secondary"
                 variant="outlined"
                 margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
                 name="email"
-                value={email}
+                label="Email Address"
+                type="text"
+                id="email"
                 autoComplete="email"
-                onChange={event => setEmail(event.target.value)}
+                fullWidth
+                required
                 autoFocus
+                value={email}
+                onChange={event => setEmail(event.target.value)}
               />
               <TextField
+                color="secondary"
                 variant="outlined"
                 margin="normal"
-                required
-                fullWidth
                 name="password"
-                value={password}
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                fullWidth
+                required
                 onChange={event => setPassword(event.target.value)}
+                value={password}
               />
               <Button
                 type="submit"

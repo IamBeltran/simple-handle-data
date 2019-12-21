@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { useAuthConsumer } from '../context/AuthContext';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuthConsumer();
   return (
     <React.Fragment key="ProtectedRoute">
       <Route

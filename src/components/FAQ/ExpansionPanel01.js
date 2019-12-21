@@ -20,6 +20,9 @@ const useStyles = makeStyles(theme => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
+  details: {
+    flexDirection: 'column',
+  },
 }));
 
 const MyExpansionPanel = props => {
@@ -37,10 +40,15 @@ const MyExpansionPanel = props => {
         >
           <Typography className={classes.heading}>¿Qué es Simple handle data?</Typography>
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <Typography align="justify" component="p">
+        <ExpansionPanelDetails className={classes.details}>
+          <Typography paragraph align="justify" component="p">
             Software para el manejo de bases de datos con información de teléfonos y correos
-            electrónicos, su última <b>actualización: {database}</b>.
+            electrónicos, los desarrolladores del sofware conocen las necesidades y requerimientos
+            del manejo y gestión de bases de datos de este rubro, los recursos que se gastan en la
+            optimización de una base de datos, como dinero y tiempo.
+          </Typography>
+          <Typography paragraph align="justify" component="p">
+            Su última <b>actualización: {database}</b>.
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>

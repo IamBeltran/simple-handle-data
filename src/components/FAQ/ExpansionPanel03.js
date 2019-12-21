@@ -52,7 +52,7 @@ const MyExpansionPanel = props => {
         >
           <Typography className={classes.heading}>¿Qué es una tupla?</Typography>
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails direction="column" className={classes.details}>
+        <ExpansionPanelDetails className={classes.details}>
           <Typography paragraph align="justify">
             Al igual que la dupla es una colección de registros con una clave única y varios campos
             de valor.

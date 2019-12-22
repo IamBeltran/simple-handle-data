@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    minHeight: '100vh',
+    minHeight: '80vh',
     color: theme.palette.text.primary,
   },
   avatar: {
@@ -53,13 +53,13 @@ const useStyles = makeStyles(theme => ({
 
 const SignInForm = props => {
   const classes = useStyles();
+  const { history } = props;
   const { login, loginError, clearLoginError } = useAuthConsumer();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onSubmit = event => {
     event.preventDefault();
-    const { history } = props;
     login(email, password).then(() => {
       history.push('/');
     });

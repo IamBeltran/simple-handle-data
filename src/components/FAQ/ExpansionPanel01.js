@@ -25,10 +25,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const { IFT } = window;
+const { update } = IFT;
+const { database } = update;
+// const database = '2019-08-09';
+
 const MyExpansionPanel = props => {
   const classes = useStyles();
   const { expanded, handleChange } = props;
-  const database = '2019-08-09';
 
   return (
     <React.Fragment key="panel1a-content">
@@ -42,10 +46,11 @@ const MyExpansionPanel = props => {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
           <Typography paragraph align="justify" component="p">
-            Software para el manejo de bases de datos con información de teléfonos y correos
-            electrónicos, los desarrolladores del sofware conocen las necesidades y requerimientos
-            del manejo y gestión de bases de datos de este rubro, los recursos que se gastan en la
-            optimización de una base de datos, como dinero y tiempo.
+            Software para el manejo de bases de datos que contiene información de teléfonos y
+            correos electrónicos, ayudando a la depuracion y validacion de ellos los desarrolladores
+            del sofware conocen las necesidades y requerimientos del manejo y gestión de bases de
+            datos de este rubro, los recursos que se gastan en la optimización de una base de datos,
+            como dinero y tiempo.
           </Typography>
           <Typography paragraph align="justify" component="p">
             Su última <b>actualización: {database}</b>.

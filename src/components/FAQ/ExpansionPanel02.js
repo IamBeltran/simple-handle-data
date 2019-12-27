@@ -54,9 +54,9 @@ const MyExpansionPanel = props => {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
           <Typography paragraph align="justify">
-            En término de bases de datos, es una colección de registros una clave única y un solo
-            campo de valor, en el siguiente ejemplo el numero de cuenta es la clave unica y el campo
-            valor es el email, cada fila es un registro.
+            En término de bases de datos, es una colección de registros con una clave única y un
+            solo campo de valor, en el siguiente ejemplo el numero de cuenta es la clave unica y el
+            campo valor es el email, cada fila es un registro.
           </Typography>
           <Table className={classes.table} size="small" aria-label="Ejemplo de Dupla">
             <caption style={captionStyle}>Ejemplo de Dupla</caption>

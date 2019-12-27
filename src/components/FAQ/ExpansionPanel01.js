@@ -25,10 +25,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const { IFT } = window;
-const { update } = IFT;
-const { database } = update;
-// const database = '2019-08-09';
+const {
+  update: { database },
+} = window.IFT;
 
 const MyExpansionPanel = props => {
   const classes = useStyles();

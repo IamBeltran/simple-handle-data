@@ -1,5 +1,11 @@
+// ▶ Import react dependecies
 import React, { useState } from 'react';
+
+// ▶ Import xlsx dependecy
 import XLSX from 'xlsx';
+
+// ▶ Import material-ui components
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar,
   Divider,
@@ -16,12 +22,15 @@ import {
   Chip,
   LinearProgress,
 } from '@material-ui/core/';
+
+// ▶ Import material-ui icons
 import {
   CloudUpload as CloudUploadIcon,
   CloudDownload as CloudDownloadIcon,
   Storage as StorageIcon,
 } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core/styles';
+
+// ▶ Import material-ui libs
 import handleworkbook from '../../lib/handleWorkbook';
 
 const { sheetToJSON, createWorkbook } = handleworkbook;
@@ -30,12 +39,16 @@ const { sheetToJSON, createWorkbook } = handleworkbook;
 const regexWoorBook = /([a-zA-Z0-9\s_\\.\-\(\):])+(.xlsx|.xls)$/;
 const SheetJSFT = ['xlsx', 'xls'].map(x => `.${x}`).join(',');
 
-const styles = makeStyles(theme => ({
+// ▶ Make styles
+const useStyles = makeStyles(theme => ({
+  container: {
+    padding: theme.spacing(0),
+  },
   paper: {
-    marginTop: theme.spacing(2),
+    padding: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing(4),
+    color: theme.palette.text.primary,
   },
   group: {
     margin: theme.spacing(1, 0),
@@ -68,7 +81,7 @@ const styles = makeStyles(theme => ({
 }));
 
 const CollectionForm = () => {
-  const classes = styles();
+  const classes = useStyles();
   const [error, setError] = useState(null);
   const [collection, setCollection] = useState('');
   const [type, setType] = useState('');
@@ -149,130 +162,156 @@ const CollectionForm = () => {
 
   return (
     <Container maxWidth="lg" className={classes.container}>
-      <Paper className={classes.paper}>
-        <Grid container direction="row" spacing={2}>
-          <Grid item xs={12} align="center">
-            <Avatar className={classes.avatar}>
-              <StorageIcon />
-            </Avatar>
-            <Typography component="h1" variant="h4" align="center">
-              Opciones
-            </Typography>
-          </Grid>
-        </Grid>
-        {load && <br />}
-        {load && <LinearProgress color="secondary" />}
-        <Divider className={classes.divider} />
+      <Grid container direction="column">
+        <Grid item>
+          <Paper className={classes.paper}>
+            {/* SECTION: Section 01: Avatar, Typography */}
+            <Grid container direction="column">
+              <Grid item xs={12} align="center">
+                <Avatar className={classes.avatar}>
+                  <StorageIcon />
+                </Avatar>
+                <Typography component="h1" variant="h4" align="center">
+                  Opciones
+                </Typography>
+              </Grid>
+            </Grid>
+            {/* !SECTION */}
 
-        <Grid container direction="row" spacing={2}>
-          <Grid item xs={12} sm={4}>
-            <FormControl component="fieldset" className={classes.formControl}>
-              <FormLabel component="legend">Tipo de colección</FormLabel>
-              <RadioGroup
-                aria-label="Tipo de colección"
-                name="typeCollection"
-                className={classes.group}
-                value={collection}
-                onChange={event => setCollection(event.target.value)}
+            {/* SECTION: Section 02: br, LinearProgress, Divider */}
+            <Grid container direction="column">
+              <Grid item xs={12} align="center">
+                {load && <br />}
+                {load && <LinearProgress color="secondary" />}
+                <Divider className={classes.divider} />
+              </Grid>
+            </Grid>
+            {/* !SECTION */}
+
+            {/* SECTION: Section 03 */}
+            <Grid container direction="row">
+              {/* SECTION: Section A */}
+              <Grid item xs={4} align="left">
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel component="legend">Tipo de colección</FormLabel>
+                  <RadioGroup
+                    aria-label="Tipo de colección"
+                    name="typeCollection"
+                    className={classes.group}
+                    value={collection}
+                    onChange={event => setCollection(event.target.value)}
+                  >
+                    <FormControlLabel
+                      value="dupla"
+                      disabled={disableRadio}
+                      control={<Radio />}
+                      label="Dupla"
+                    />
+                    <FormControlLabel
+                      value="tuple"
+                      disabled={disableRadio}
+                      control={<Radio />}
+                      label="Tupla"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+              {/* !SECTION */}
+
+              {/* SECTION: Section B */}
+              <Grid item xs={4} align="left">
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel component="legend">Tipo de datos</FormLabel>
+                  <RadioGroup
+                    aria-label="Tipo de datos"
+                    name="typeData"
+                    className={classes.group}
+                    value={type}
+                    onChange={event => setType(event.target.value)}
+                  >
+                    <FormControlLabel
+                      value="email"
+                      disabled={disableRadio}
+                      control={<Radio />}
+                      label="E-mail"
+                    />
+                    <FormControlLabel
+                      value="phone"
+                      disabled={disableRadio}
+                      control={<Radio />}
+                      label="Teléfono"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+              {/* !SECTION */}
+
+              {/* SECTION: Section C */}
+              <Grid
+                item
+                xs={4}
+                align="left"
+                container
+                direction="column"
+                justify="space-around"
+                alignItems="center"
               >
-                <FormControlLabel
-                  value="dupla"
-                  disabled={disableRadio}
-                  control={<Radio />}
-                  label="Dupla"
+                <label htmlFor="contained-button-file" className={classes.label}>
+                  <input
+                    accept={SheetJSFT}
+                    className={classes.input}
+                    id="contained-button-file"
+                    type="file"
+                    name="file"
+                    key={inputKey}
+                    onChange={event => uploadFile(event.target.files)}
+                  />
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    component="span"
+                    color="secondary"
+                    disabled={disableUpload}
+                    className={classes.button}
+                  >
+                    Upload
+                    <CloudUploadIcon className={classes.rightIcon} />
+                  </Button>
+                </label>
+                <Button
+                  fullWidth
+                  type="button"
+                  variant="contained"
+                  color="secondary"
+                  disabled={disableDownload}
+                  className={classes.submit}
+                  onClick={exportFile}
+                >
+                  Download
+                  <CloudDownloadIcon className={classes.rightIcon} />
+                </Button>
+              </Grid>
+              {/* !SECTION */}
+            </Grid>
+            {/* !SECTION */}
+
+            {/* SECTION: Section 04: Divider, Chip */}
+            {error && (
+              <Grid container direction="column">
+                <Divider className={classes.divider} />
+                <Chip
+                  label={error}
+                  variant="outlined"
+                  onDelete={resetState}
+                  className={classes.chip}
+                  color="secondary"
                 />
-                <FormControlLabel
-                  value="tuple"
-                  disabled={disableRadio}
-                  control={<Radio />}
-                  label="Tupla"
-                />
-              </RadioGroup>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <FormControl component="fieldset" className={classes.formControl}>
-              <FormLabel component="legend">Tipo de datos</FormLabel>
-              <RadioGroup
-                aria-label="Tipo de datos"
-                name="typeData"
-                className={classes.group}
-                value={type}
-                onChange={event => setType(event.target.value)}
-              >
-                <FormControlLabel
-                  value="email"
-                  disabled={disableRadio}
-                  control={<Radio />}
-                  label="E-mail"
-                />
-                <FormControlLabel
-                  value="phone"
-                  disabled={disableRadio}
-                  control={<Radio />}
-                  label="Teléfono"
-                />
-              </RadioGroup>
-            </FormControl>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={4}
-            container
-            direction="column"
-            justify="space-around"
-            alignItems="center"
-          >
-            <label htmlFor="contained-button-file" className={classes.label}>
-              <input
-                accept={SheetJSFT}
-                className={classes.input}
-                id="contained-button-file"
-                type="file"
-                name="file"
-                key={inputKey}
-                onChange={event => uploadFile(event.target.files)}
-              />
-              <Button
-                fullWidth
-                variant="contained"
-                component="span"
-                color="secondary"
-                disabled={disableUpload}
-                className={classes.button}
-              >
-                Upload
-                <CloudUploadIcon className={classes.rightIcon} />
-              </Button>
-            </label>
-            <Button
-              fullWidth
-              type="button"
-              variant="contained"
-              color="secondary"
-              disabled={disableDownload}
-              className={classes.submit}
-              onClick={exportFile}
-            >
-              Download
-              <CloudDownloadIcon className={classes.rightIcon} />
-            </Button>
-          </Grid>
+              </Grid>
+            )}
+            {/* !SECTION */}
+          </Paper>
         </Grid>
-        {error && (
-          <React.Fragment key="error">
-            <Divider className={classes.divider} />
-            <Chip
-              label={error}
-              variant="outlined"
-              onDelete={resetState}
-              className={classes.chip}
-              color="secondary"
-            />
-          </React.Fragment>
-        )}
-      </Paper>
+      </Grid>
     </Container>
   );
 };

@@ -1,7 +1,5 @@
 // ▶ Import react dependecies
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 
 // ▶ Import material-ui components
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,6 +8,7 @@ import {
   Button,
   Chip,
   Container,
+  Divider,
   Grid,
   Paper,
   TextField,
@@ -22,10 +21,17 @@ import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons/';
 // ▶ Import AuthContext
 import { useAuthConsumer } from '../../context/AuthContext';
 
+// ▶ Import Hooks
+import useRouter from '../../hooks/useRouter';
+// import useUserId from '../../hooks/useUserId';
+
 // ▶ Make styles
 const useStyles = makeStyles(theme => ({
   container: {
     padding: theme.spacing(0),
+  },
+  divider: {
+    marginTop: theme.spacing(2),
   },
   paper: {
     padding: theme.spacing(4),
@@ -47,21 +53,22 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2),
   },
   chip: {
-    margin: theme.spacing(2),
+    margin: theme.spacing(0),
+    width: '100%',
   },
 }));
 
-const SignInForm = props => {
+const SignInForm = () => {
   const classes = useStyles();
-  const { history } = props;
+  const router = useRouter();
   const { login, loginError, clearLoginError } = useAuthConsumer();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onSubmit = event => {
+  const submit = event => {
     event.preventDefault();
     login(email, password).then(() => {
-      history.push('/');
+      router.push('/');
     });
   };
 
@@ -77,61 +84,81 @@ const SignInForm = props => {
       <Grid container direction="column">
         <Grid item>
           <Paper className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            {loginError && (
-              <Chip
-                label={loginError}
-                variant="outlined"
-                onDelete={onDelete}
-                className={classes.chip}
-                color="secondary"
-              />
-            )}
-            <form className={classes.form} onSubmit={onSubmit} noValidate autoComplete="off">
-              <TextField
-                color="secondary"
-                variant="outlined"
-                margin="normal"
-                name="email"
-                label="Email Address"
-                type="text"
-                id="email"
-                autoComplete="email"
-                fullWidth
-                required
-                autoFocus
-                value={email}
-                onChange={event => setEmail(event.target.value)}
-              />
-              <TextField
-                color="secondary"
-                variant="outlined"
-                margin="normal"
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                fullWidth
-                required
-                onChange={event => setPassword(event.target.value)}
-                value={password}
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="secondary"
-                disabled={isDisabled}
-                className={classes.submit}
-              >
-                Sign In
-              </Button>
+            <Grid container direction="column" justify="center" alignItems="stretch" spacing={1}>
+              <Grid item xs={12} sm={12} align="center">
+                <Avatar className={classes.avatar}>
+                  <LockOutlinedIcon />
+                </Avatar>
+              </Grid>
+              <Grid item xs={12} sm={12} align="center">
+                <Typography component="h1" variant="h5">
+                  Iniciar sesión
+                </Typography>
+              </Grid>
+              {loginError && (
+                <Grid item xs={12} sm={12} align="center">
+                  <Chip
+                    color="secondary"
+                    variant="outline"
+                    onDelete={onDelete}
+                    className={classes.chip}
+                    label={loginError}
+                  />
+                </Grid>
+              )}
+              <Divider className={classes.divider} />
+            </Grid>
+            <form className={classes.form} onSubmit={submit} noValidate autoComplete="off">
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    color="secondary"
+                    variant="outlined"
+                    margin="normal"
+                    name="email"
+                    label="Correo electrónico"
+                    type="text"
+                    id="email"
+                    autoComplete="email"
+                    fullWidth
+                    required
+                    autoFocus
+                    value={email}
+                    onChange={event => setEmail(event.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    color="secondary"
+                    variant="outlined"
+                    margin="normal"
+                    name="password"
+                    label="Contraseña"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    fullWidth
+                    required
+                    onChange={event => setPassword(event.target.value)}
+                    value={password}
+                  />
+                </Grid>
+              </Grid>
+              <Divider className={classes.divider} />
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={12}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="secondary"
+                    disabled={isDisabled}
+                    className={classes.submit}
+                  >
+                    Iniciar sesión
+                  </Button>
+                </Grid>
+              </Grid>
             </form>
           </Paper>
         </Grid>
@@ -140,8 +167,4 @@ const SignInForm = props => {
   );
 };
 
-SignInForm.propTypes = {
-  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
-};
-
-export default withRouter(SignInForm);
+export default SignInForm;

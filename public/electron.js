@@ -20,14 +20,21 @@ const path = require('path');
 const url = require('url');
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
+//  │ PATH MY DEPENDENCIES MODULES.                                                     │
+//  └───────────────────────────────────────────────────────────────────────────────────┘
+const handleFirebasePath = path.join(__dirname, '..', 'system', 'handleFirebase');
+
+//  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ REQUIRE MY DEPENDENCIES MODULES.                                                  │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
 const webcontext = path.join(__dirname, '..', 'system', 'node-integration.js');
+const handleFirebase = require(handleFirebasePath);
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DESTRUCTURING DEPENDENCIES.                                                       │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
 const { app, BrowserWindow, ipcMain } = electron;
+const { doSignInWithEmailAndPassword, doSignOut } = handleFirebase;
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DECLARATION OF CONSTANTS-VARIABLES.                                               │
@@ -136,4 +143,25 @@ ipcMain.on('send-notification', (event, notification) => {
     message: notification.message,
   });
 });
+
+ipcMain.on('login-send', async (event, { email, password }) => {
+  await doSignInWithEmailAndPassword(email, password)
+    .then(user => {
+      event.reply('login-reply-success', user);
+    })
+    .catch(error => {
+      event.reply('login-reply-error', error);
+    });
+});
+
+ipcMain.on('logout-send', async (event, { email, password }) => {
+  await doSignOut(email, password)
+    .then(() => {
+      event.reply('logout-reply-success', null);
+    })
+    .catch(error => {
+      event.reply('logout-reply-error', error);
+    });
+});
+
 console.log(app.getPath('userData'));

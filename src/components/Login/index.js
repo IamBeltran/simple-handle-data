@@ -23,7 +23,6 @@ import { useAuthConsumer } from '../../context/AuthContext';
 
 // ▶ Import Hooks
 import useRouter from '../../hooks/useRouter';
-// import useUserId from '../../hooks/useUserId';
 
 // ▶ Make styles
 const useStyles = makeStyles(theme => ({
@@ -84,7 +83,7 @@ const SignInForm = () => {
       <Grid container direction="column">
         <Grid item>
           <Paper className={classes.paper}>
-            <Grid container direction="column" justify="center" alignItems="stretch" spacing={1}>
+            <Grid container direction="column" justify="center" alignItems="stretch" spacing={0}>
               <Grid item xs={12} sm={12} align="center">
                 <Avatar className={classes.avatar}>
                   <LockOutlinedIcon />
@@ -99,7 +98,7 @@ const SignInForm = () => {
                 <Grid item xs={12} sm={12} align="center">
                   <Chip
                     color="secondary"
-                    variant="outline"
+                    variant="outlined"
                     onDelete={onDelete}
                     className={classes.chip}
                     label={loginError}

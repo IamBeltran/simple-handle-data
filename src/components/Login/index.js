@@ -1,5 +1,5 @@
 // ▶ Import react dependecies
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // ▶ Import material-ui components
 import { makeStyles } from '@material-ui/core/styles';
@@ -60,16 +60,20 @@ const useStyles = makeStyles(theme => ({
 const SignInForm = () => {
   const classes = useStyles();
   const router = useRouter();
-  const { login, loginError, clearLoginError } = useAuthConsumer();
+  const { user, login, loginError, clearLoginError } = useAuthConsumer();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const submit = event => {
     event.preventDefault();
-    login(email, password).then(() => {
-      router.push('/');
-    });
+    login(email, password);
   };
+
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+    }
+  }, [user, router]);
 
   const onDelete = () => {
     setEmail('');

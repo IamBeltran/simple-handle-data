@@ -92,9 +92,13 @@ const Layout = () => {
       secondary: {
         main: '#43a047',
       },
-      type: 'light',
+      type: localStorage.getItem('type') || 'light',
     },
   });
+
+  React.useEffect(() => {
+    localStorage.setItem('type', theme.palette.type);
+  }, [theme]);
 
   // » We change the palette type of the theme in state
   const toggleTheme = () => {

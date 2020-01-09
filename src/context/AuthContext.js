@@ -1,60 +1,56 @@
 // ▶ Import react dependecies
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-import {
-  doCreateUserWithEmailAndPassword,
-  doSignInWithEmailAndPassword,
-  doSignOut,
-} from '../lib/Firebase';
 
 // ▶ Create context
 const AuthContext = React.createContext();
+
+// ▶ Import Electron
+const { electron } = window;
+const { ipcRenderer } = electron;
 
 // ▶ Create provider
 const AuthProvider = props => {
   const { children } = props;
   const [user, setUser] = useState(null);
-  const [signupError, setSignupError] = useState(null);
   const [loginError, setLoginError] = useState(null);
   const [logoutError, setLogoutError] = useState(null);
 
   // NOTE: Regístratar usuario
-  async function signup(email, password) {
-    await doCreateUserWithEmailAndPassword(email, password)
-      .then(result => {
-        setUser(result);
-      })
-      .catch(error => {
-        setSignupError(error);
-      });
-  }
 
   // NOTE: Iniciar sesión
   async function login(email, password) {
-    await doSignInWithEmailAndPassword(email, password)
-      .then(result => {
-        setUser(result);
-      })
-      .catch(error => {
-        setLoginError(error);
-      });
+    ipcRenderer.send('login-send', { email, password });
   }
+
+  useEffect(() => {
+    ipcRenderer.on('login-reply-success', (event, listener) => {
+      setUser(listener);
+    });
+  }, [user]);
+
+  useEffect(() => {
+    ipcRenderer.on('login-reply-error', (event, error) => {
+      setLoginError(error);
+    });
+  }, [loginError]);
 
   // NOTE: Cerrar sesión
   async function logout() {
-    await doSignOut()
-      .then(() => {
-        setUser(null);
-      })
-      .catch(error => {
-        setLogoutError(error);
-      });
+    ipcRenderer.send('logout-send', 'logout');
   }
 
-  async function clearSignupError() {
-    setSignupError(null);
-  }
+  useEffect(() => {
+    ipcRenderer.on('logout-reply-success', (event, listener) => {
+      setUser(listener);
+    });
+  }, [user]);
+
+  useEffect(() => {
+    ipcRenderer.on('logout-reply-error', (event, error) => {
+      setLogoutError(error);
+    });
+  }, [logoutError]);
 
   async function clearLoginError() {
     setLoginError(null);
@@ -67,17 +63,14 @@ const AuthProvider = props => {
   const value = useMemo(() => {
     return {
       user,
-      signupError,
       loginError,
       logoutError,
-      signup,
       login,
       logout,
-      clearSignupError,
       clearLoginError,
       clearLogoutError,
     };
-  }, [user, signupError, loginError, logoutError]);
+  }, [user, loginError, logoutError]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -22,7 +22,7 @@ const url = require('url');
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ PATH MY DEPENDENCIES MODULES.                                                     │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
-const handleFirebasePath = path.join(__dirname, '..', 'system', 'handleFirebase');
+const handleFirebasePath = path.join(__dirname, '..', 'system', 'helpers', 'handleFirebase');
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ REQUIRE MY DEPENDENCIES MODULES.                                                  │

@@ -1,18 +1,9 @@
 /* eslint-disable no-async-promise-executor */
 const firebase = require('firebase/app');
+const firebaseConfig = require('./firebaseConfig');
 
 require('firebase/auth');
 require('firebase/database');
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyDvdE4D32fdjx6zIvRbo_rgNWLWKhn82rs',
-  authDomain: 'bd-ift.firebase.com',
-  databaseURL: 'https://bd-ift.firebaseio.com',
-  projectId: 'bd-ift',
-  storageBucket: 'bd-ift.appspot.com',
-  messagingSenderId: '101900884488',
-  appId: '1:101900884488:web:f28282aec5a1cf17',
-};
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);

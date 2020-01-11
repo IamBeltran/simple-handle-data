@@ -71,7 +71,7 @@ const doCreateUserWithEmailAndPassword = (email, password) => {
         const user = await getUser(currentUser);
         return resolve(user);
       })
-      .catch(error => {
+      .catch(async error => {
         const message = getErrorMessage(error);
         return reject(message);
       });
@@ -88,7 +88,7 @@ const doSignInWithEmailAndPassword = (email, password) => {
         const user = await getUser(currentUser);
         return resolve(user);
       })
-      .catch(error => {
+      .catch(async error => {
         const message = getErrorMessage(error);
         return reject(message);
       });
@@ -103,62 +103,11 @@ const doSignOut = () => {
       .then(async () => {
         return resolve(true);
       })
-      .catch(error => {
+      .catch(async error => {
         return reject(error);
       });
   });
 };
-
-/*
- 1.- Ya debe de existir el usuario
- 2.- Verificar si existe de todos modos
-*/
-
-// const doLoggingUserSign = (userSign, ip) => {
-//   return new Promise(async (resolve, reject) => {
-//     const { email, name } = userSign;
-//     const docRef = database.collection('users').doc(`${email}`);
-
-//     docRef
-//       .get()
-//       .then(doc => {
-//         if (doc.exists) {
-//           console.log('Document data:', doc.data());
-//         } else {
-//           // doc.data() will be undefined in this case
-//           console.log('No such document!');
-//         }
-//       })
-//       .catch(function(error) {
-//         console.log('Error getting document:', error);
-//       });
-//   });
-// };
-// return database
-//   .collection('users')
-//   .doc(`${userSign.email}`)
-//   .set({
-//     name: userSign.name,
-//     ips: {
-
-//     }
-//   })
-//   .then(async () => {})
-//   .catch(error => {});
-
-// db.collection("cities").doc("LA").set({
-//   name: "Los Angeles",
-//   state: "CA",
-//   country: "USA"
-// })
-// .then(function() {
-//   console.log("Document successfully written!");
-// })
-// .catch(function(error) {
-//   console.error("Error writing document: ", error);
-// });
-
-// const database = firebase.firestore();
 
 //  ──[ EXPORT MODULE ]──────────────────────────────────────────────────────────────────
 const handleFirebase = (module.exports = exports = {}); // eslint-disable-line no-multi-assign

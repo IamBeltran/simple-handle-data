@@ -103,6 +103,7 @@ const doSignOut = () => {
 //  ──[ EXPORT MODULE ]──────────────────────────────────────────────────────────────────
 const handleFirebase = (module.exports = exports = {}); // eslint-disable-line no-multi-assign
 
+// » Main Modules
 handleFirebase.doCreateUserWithEmailAndPassword = doCreateUserWithEmailAndPassword;
 handleFirebase.doSignInWithEmailAndPassword = doSignInWithEmailAndPassword;
 handleFirebase.doSignOut = doSignOut;

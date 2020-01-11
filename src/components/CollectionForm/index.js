@@ -88,6 +88,7 @@ const CollectionForm = () => {
   const [data, setData] = useState([]);
   const [hasFile, setHasFile] = useState(null);
   const [load, setload] = useState(false);
+  const [pushDownload, setPushDownload] = useState(false);
   const [inputKey, setInputKey] = useState(Date.now());
 
   const resetState = () => {
@@ -96,6 +97,7 @@ const CollectionForm = () => {
     setType('');
     setHasFile(null);
     setData([]);
+    setPushDownload(false);
     setInputKey(Date.now());
   };
 
@@ -127,6 +129,7 @@ const CollectionForm = () => {
   };
 
   const exportFile = async () => {
+    setPushDownload(true);
     await createWorkbook(data, { collection, data: type })
       .then(result => {
         const { workbook, filename } = result;
@@ -158,7 +161,7 @@ const CollectionForm = () => {
   const hasData = data.length > 0;
   const disableRadio = hasData || error || hasFile || load;
   const disableUpload = hasData || !hasSettings || load || error;
-  const disableDownload = !hasSettings || !hasData;
+  const disableDownload = !hasSettings || !hasData || pushDownload;
 
   return (
     <Container maxWidth="lg" className={classes.container}>

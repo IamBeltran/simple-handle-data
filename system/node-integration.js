@@ -13,7 +13,6 @@ const electron = require('electron');
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ REQUIRE MY DEPENDENCIES MODULES.                                                  │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
-const IFTStore = require('./store/IFTStore');
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DESTRUCTURING DEPENDENCIES.                                                       │
@@ -22,8 +21,6 @@ const IFTStore = require('./store/IFTStore');
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DECLARATION OF CONSTANTS-VARIABLES.                                               │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
-const IFTSTORE = new IFTStore().setupStore();
-const { IFT } = IFTSTORE;
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DECLARATION OF AUXILIARY FUNCTIONS.                                               │
@@ -36,4 +33,3 @@ const { IFT } = IFTSTORE;
 //  ──[ EXPORT MODULE ]──────────────────────────────────────────────────────────────────
 window.__devtron = { require, process };
 window.electron = electron;
-window.IFT = IFT;

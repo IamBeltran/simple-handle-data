@@ -1,5 +1,5 @@
 // ▶ Import react dependecies
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // ▶ Import xlsx dependecy
 import XLSX from 'xlsx';
@@ -30,10 +30,9 @@ import {
   Storage as StorageIcon,
 } from '@material-ui/icons';
 
-// ▶ Import material-ui libs
-import handleworkbook from '../../lib/handleWorkbook';
-
-const { sheetToJSON, createWorkbook } = handleworkbook;
+// ▶ Import Electron
+const { electron } = window;
+const { ipcRenderer } = electron;
 
 // eslint-disable-next-line no-useless-escape
 const regexWoorBook = /([a-zA-Z0-9\s_\\.\-\(\):])+(.xlsx|.xls)$/;
@@ -109,14 +108,7 @@ const CollectionForm = () => {
       // Parse data
       const bstr = e.target.result;
       const workbook = XLSX.read(bstr, { type: rABS ? 'binary' : 'array' });
-      sheetToJSON(workbook, collection)
-        .then(result => {
-          setData(result);
-        })
-        .catch(err => {
-          const { message } = err;
-          setError(message);
-        });
+      ipcRenderer.send('sheet-to-json', { workbook, collection });
     };
     reader.onloadstart = () => {
       setload(true);
@@ -128,20 +120,36 @@ const CollectionForm = () => {
     else reader.readAsArrayBuffer(file);
   };
 
+  useEffect(() => {
+    ipcRenderer.on('sheet-to-json-reply-success', (event, listener) => setData(listener));
+    return () => ipcRenderer.removeAllListeners(['sheet-to-json-reply-success']);
+  }, [data]);
+
+  useEffect(() => {
+    const handleListener = (event, listener) => setError(listener);
+    ipcRenderer.on('sheet-to-json-reply-error', handleListener);
+    return () => ipcRenderer.removeAllListeners(['sheet-to-json-reply-error']);
+  }, [error]);
+
   const exportFile = async () => {
     setPushDownload(true);
-    await createWorkbook(data, { collection, data: type })
-      .then(result => {
-        const { workbook, filename } = result;
-        if (XLSX.writeFile(workbook, filename)) {
-          resetState();
-        }
-      })
-      .catch(err => {
-        const { message } = err;
-        setError(message);
-      });
+    ipcRenderer.send('create-workbook', { data, collection, type });
   };
+
+  useEffect(() => {
+    ipcRenderer.on('create-workbook-reply-success', (event, listener) => {
+      const { workbook, filename } = listener;
+      if (XLSX.writeFile(workbook, filename)) {
+        resetState();
+      }
+    });
+    return () => ipcRenderer.removeAllListeners(['create-workbook-reply-success']);
+  }, []);
+
+  useEffect(() => {
+    ipcRenderer.on('create-workbook-reply-error', (event, listener) => setError(listener));
+    return () => ipcRenderer.removeAllListeners(['create-workbook-reply-error']);
+  }, [error]);
 
   const uploadFile = async fileList => {
     if (collection !== '' && type !== '' && fileList && fileList[0]) {

@@ -23,18 +23,21 @@ const url = require('url');
 //  │ PATH MY DEPENDENCIES MODULES.                                                     │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
 const handleFirebasePath = path.join(__dirname, '..', 'system', 'helpers', 'handleFirebase');
+const handleWorkbookPath = path.join(__dirname, '..', 'system', 'helpers', 'handleWorkbook');
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ REQUIRE MY DEPENDENCIES MODULES.                                                  │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
 const webcontext = path.join(__dirname, '..', 'system', 'node-integration.js');
 const handleFirebase = require(handleFirebasePath);
+const handleWorkbook = require(handleWorkbookPath);
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DESTRUCTURING DEPENDENCIES.                                                       │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
 const { app, BrowserWindow, ipcMain } = electron;
 const { doSignInWithEmailAndPassword, doSignOut } = handleFirebase;
+const { sheetToJSON, createWorkbook } = handleWorkbook;
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DECLARATION OF CONSTANTS-VARIABLES.                                               │
@@ -176,6 +179,31 @@ ipcMain.on('logout-send', async (event, { email, password }) => {
     })
     .catch(error => {
       event.reply('logout-reply-error', error);
+    });
+});
+
+// » SHEET-TO-JSON
+ipcMain.on('sheet-to-json', async (event, { workbook, collection }) => {
+  sheetToJSON(workbook, collection)
+    .then(result => {
+      event.reply('sheet-to-json-reply-success', result);
+    })
+    .catch(err => {
+      const { message } = err;
+      event.reply('sheet-to-json-reply-error', message);
+    });
+});
+
+// » CREATE-WORKBOOK
+ipcMain.on('create-workbook', async (event, { data, collection, type }) => {
+  await createWorkbook(data, { collection, data: type })
+    .then(result => {
+      const { workbook, filename } = result;
+      event.reply('create-workbook-reply-success', { workbook, filename });
+    })
+    .catch(err => {
+      const { message } = err;
+      event.reply('create-workbook-reply-error', message);
     });
 });
 

@@ -24,19 +24,13 @@ const AuthProvider = props => {
   }
 
   useEffect(() => {
-    const handleListener = (event, listener) => setUser(listener);
-    ipcRenderer.on('login-reply-success', handleListener);
-    return () => {
-      ipcRenderer.removeListener('login-reply-success', handleListener);
-    };
+    ipcRenderer.on('login-reply-success', (event, listener) => setUser(listener));
+    return () => ipcRenderer.removeAllListeners(['login-reply-success']);
   }, [user]);
 
   useEffect(() => {
-    const handleListener = (event, listener) => setUser(listener);
-    ipcRenderer.on('login-reply-error', handleListener);
-    return () => {
-      ipcRenderer.removeListener('login-reply-error', handleListener);
-    };
+    ipcRenderer.on('login-reply-error', (event, listener) => setLoginError(listener));
+    return () => ipcRenderer.removeAllListeners(['login-reply-error']);
   }, [loginError]);
 
   // NOTE: Cerrar sesión
@@ -45,19 +39,13 @@ const AuthProvider = props => {
   }
 
   useEffect(() => {
-    const handleListener = (event, listener) => setUser(listener);
-    ipcRenderer.on('logout-reply-success', handleListener);
-    return () => {
-      ipcRenderer.removeListener('logout-reply-success', handleListener);
-    };
+    ipcRenderer.on('logout-reply-success', (event, listener) => setUser(listener));
+    return () => ipcRenderer.removeAllListeners(['logout-reply-success']);
   }, [user]);
 
   useEffect(() => {
-    const handleListener = (event, listener) => setLogoutError(listener);
-    ipcRenderer.on('logout-reply-error', handleListener);
-    return () => {
-      ipcRenderer.removeListener('logout-reply-error', handleListener);
-    };
+    ipcRenderer.on('logout-reply-error', (event, listener) => setLogoutError(listener));
+    return () => ipcRenderer.removeAllListeners(['logout-reply-error']);
   }, [logoutError]);
 
   async function clearLoginError() {

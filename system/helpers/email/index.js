@@ -217,8 +217,18 @@ async function emailGetAddressInfo(address) {
   let isValidAddress = emailIsValidAddress(address);
   let isValidDomain = await emailIsValidDomain(address);
   let detail;
+  let addressTemp;
+  let isValidEmailTemp;
+  let isValidAddressTemp;
+  let isValidDomainTemp;
   let isValidEmail = isValidAddress && isValidDomain;
   if (!isValidEmail && hasAt) {
+    addressTemp = emailSanitize(address);
+    isValidAddressTemp = emailIsValidAddress(addressTemp);
+    isValidDomainTemp = await emailIsValidDomain(address);
+    isValidEmailTemp = isValidAddressTemp && isValidDomainTemp;
+  }
+  if (!isValidEmail && hasAt && isValidEmailTemp) {
     hasFormatted = true;
     addressFormatted = emailSanitize(address);
     isValidAddress = emailIsValidAddress(addressFormatted);

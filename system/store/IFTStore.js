@@ -22,7 +22,6 @@ const {
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DECLARATION OF CONSTANTS-VARIABLES.                                               │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
-// const serialize = value => JSON.stringify(value);
 const serialize = value => JSON.stringify(value, null, 2);
 const encryptionKey = 'oiV32mVp5lOwYneFESjrWq2xFByNOvNj';
 const IFTSchema = {

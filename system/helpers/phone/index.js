@@ -476,12 +476,12 @@ function phoneGetIFT(phoneParts) {
   if (!isValid) {
     return Object.assign(
       {},
-      { ENCONTRADO: isValid, MÓVIL: '', POBLACIÓN: '', MUNICIPIO: '', ESTADO: '' },
+      { ENCONTRADO: isValid, MÓVIL: '', POBLACIÓN: '', MUNICIPIO: '', ESTADO: '', COMPAÑIA: '' },
     );
   }
   // eslint-disable-next-line camelcase
   // válido, móvil, población, municipio, estado
-  const { mobile, population, township, state } = result[0];
+  const { mobile, population, township, state, company } = result[0];
   return Object.assign(
     {},
     {
@@ -490,6 +490,7 @@ function phoneGetIFT(phoneParts) {
       POBLACIÓN: population,
       MUNICIPIO: township,
       ESTADO: state,
+      COMPAÑIA: company,
     },
   );
 }

@@ -154,7 +154,7 @@
   },
   "build": {
     "appId": "com.electron.simplehandledata",
-    "productName": "simple-handle-data",
+    "productName": "Simple Handle Data",
     "copyright": "Copyright © year 2019 ${author}",
     "artifactName": "${name}-${version}-${platform}.${ext}",
     "asar": true,

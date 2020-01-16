@@ -96,6 +96,7 @@ function createWindow() {
       preload: webcontextPath,
     },
   });
+
   // » And load the index.html of the app.
   mainWindow.loadURL(startUrl);
 

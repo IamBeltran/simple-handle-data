@@ -20,6 +20,12 @@ const path = require('path');
 const url = require('url');
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
+//  │ PATH OF FILES.                                                                    │
+//  └───────────────────────────────────────────────────────────────────────────────────┘
+const webcontextPath = path.join(__dirname, '..', 'system', 'node-integration.js');
+const appIconPath = path.join(__dirname, '..', 'assets', 'icons', 'icon.ico');
+
+//  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ PATH MY DEPENDENCIES MODULES.                                                     │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
 const handleFirebasePath = path.join(__dirname, '..', 'system', 'helpers', 'handleFirebase');
@@ -28,14 +34,13 @@ const handleWorkbookPath = path.join(__dirname, '..', 'system', 'helpers', 'hand
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ REQUIRE MY DEPENDENCIES MODULES.                                                  │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
-const webcontext = path.join(__dirname, '..', 'system', 'node-integration.js');
 const handleFirebase = require(handleFirebasePath);
 const handleWorkbook = require(handleWorkbookPath);
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DESTRUCTURING DEPENDENCIES.                                                       │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
-const { app, BrowserWindow, ipcMain } = electron;
+const { app, BrowserWindow, ipcMain, Menu, Tray } = electron;
 const { doSignInWithEmailAndPassword, doSignOut } = handleFirebase;
 const { sheetToJSON, createWorkbook } = handleWorkbook;
 
@@ -62,6 +67,8 @@ if (isDev) {
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
+let appIcon = null;
+
 const startUrl = isDev
   ? 'http://localhost:3000'
   : url.format({
@@ -81,14 +88,14 @@ function createWindow() {
     height: 600,
     titleBarStyle: 'hidden',
     show: false,
+    icon: appIconPath,
     resizable: false,
     fullscreenable: false,
     webPreferences: {
       nodeIntegration: false,
-      preload: webcontext,
+      preload: webcontextPath,
     },
   });
-
   // » And load the index.html of the app.
   mainWindow.loadURL(startUrl);
 
@@ -135,6 +142,18 @@ function createWindow() {
 // » Emitted when Electron has finished initializing.
 app.on('ready', () => {
   createWindow();
+  appIcon = new Tray(appIconPath);
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Cerrar',
+      type: 'normal',
+      click: () => {
+        app.quit();
+      },
+    },
+  ]);
+  appIcon.setToolTip('Simple Handle Data');
+  appIcon.setContextMenu(contextMenu);
 });
 
 // » Emitted when all windows have been closed.

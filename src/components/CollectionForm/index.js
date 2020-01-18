@@ -74,7 +74,8 @@ const useStyles = makeStyles(theme => ({
   },
   label: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
     maxWidth: 'lg',
   },
 }));
@@ -203,7 +204,7 @@ const CollectionForm = () => {
             <Grid container direction="row">
               {/* SECTION: Section A */}
               <Grid item xs={4} align="left">
-                <FormControl component="fieldset" className={classes.formControl}>
+                <FormControl component="fieldset" className={classes.formControl} fullWidth>
                   <FormLabel component="legend">Tipo de colección</FormLabel>
                   <RadioGroup
                     aria-label="Tipo de colección"
@@ -231,7 +232,7 @@ const CollectionForm = () => {
 
               {/* SECTION: Section B */}
               <Grid item xs={4} align="left">
-                <FormControl component="fieldset" className={classes.formControl}>
+                <FormControl component="fieldset" className={classes.formControl} fullWidth>
                   <FormLabel component="legend">Tipo de datos</FormLabel>
                   <RadioGroup
                     aria-label="Tipo de datos"
@@ -258,49 +259,44 @@ const CollectionForm = () => {
               {/* !SECTION */}
 
               {/* SECTION: Section C */}
-              <Grid
-                item
-                xs={4}
-                align="left"
-                container
-                direction="column"
-                justify="space-around"
-                alignItems="center"
-              >
-                <label htmlFor="contained-button-file" className={classes.label}>
-                  <input
-                    accept={SheetJSFT}
-                    className={classes.input}
-                    id="contained-button-file"
-                    type="file"
-                    name="file"
-                    key={inputKey}
-                    onChange={event => uploadFile(event.target.files)}
-                  />
+              <Grid item xs={4} align="left">
+                <FormControl component="fieldset" className={classes.formControl} fullWidth>
+                  <FormLabel component="legend">Archivos</FormLabel>
+                  <label htmlFor="contained-button-file" className={classes.label}>
+                    <input
+                      accept={SheetJSFT}
+                      className={classes.input}
+                      id="contained-button-file"
+                      type="file"
+                      name="file"
+                      key={inputKey}
+                      onChange={event => uploadFile(event.target.files)}
+                    />
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      component="span"
+                      color="secondary"
+                      disabled={disableUpload}
+                      className={classes.button}
+                    >
+                      Upload
+                      <CloudUploadIcon className={classes.rightIcon} />
+                    </Button>
+                  </label>
                   <Button
                     fullWidth
+                    type="button"
                     variant="contained"
-                    component="span"
                     color="secondary"
-                    disabled={disableUpload}
-                    className={classes.button}
+                    disabled={disableDownload}
+                    className={classes.submit}
+                    onClick={exportFile}
                   >
-                    Upload
-                    <CloudUploadIcon className={classes.rightIcon} />
+                    Download
+                    <CloudDownloadIcon className={classes.rightIcon} />
                   </Button>
-                </label>
-                <Button
-                  fullWidth
-                  type="button"
-                  variant="contained"
-                  color="secondary"
-                  disabled={disableDownload}
-                  className={classes.submit}
-                  onClick={exportFile}
-                >
-                  Download
-                  <CloudDownloadIcon className={classes.rightIcon} />
-                </Button>
+                </FormControl>
               </Grid>
               {/* !SECTION */}
             </Grid>

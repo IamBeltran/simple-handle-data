@@ -54,19 +54,27 @@ const MyExpansionPanel = props => {
           </Typography>
           <ol>
             <li>
-              <b>Archivos que no de Excel (.xlsx o .xls)</b>
+              <b>Archivos que no sean de Excel (.xlsx o .xls)</b>
             </li>
             <li>
               <b>Un libro de Excel vacío (Sin información)</b>
             </li>
             <li>
-              <b>Más de una hoja en el libro de Excel</b>
+              <b>Que contenga más de una hoja en el libro de Excel</b>
             </li>
             <li>
               <b>Un libro que no empiece la información en la celda A1</b>
             </li>
             <li>
-              <b>Una hoja de Excel que exceda las columnas permitidas (2 o 26)</b>
+              <b>Una hoja de Excel que exceda las columnas permitidas</b>
+              <ol>
+                <li>
+                  <b>Dos columnas para colecciones tipo dupla</b>
+                </li>
+                <li>
+                  <b>Veintiseis columnas para colecciones tipo tupla</b>
+                </li>
+              </ol>
             </li>
           </ol>
         </ExpansionPanelDetails>

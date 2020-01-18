@@ -26,13 +26,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const {
-  update: { database },
-} = window.IFT;
+  updated: { IFT, PNN },
+  version: { APP, API },
+} = window.INFORMATION;
 
-const MyExpansionPanel = props => {
+const MyExpansionPanel01 = props => {
   const classes = useStyles();
   const { expanded, handleChange } = props;
-
   return (
     <React.Fragment key="panel1a-content">
       <ExpansionPanel expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
@@ -52,7 +52,16 @@ const MyExpansionPanel = props => {
             como dinero y tiempo.
           </Typography>
           <Typography paragraph align="justify" component="p">
-            Su última <b>actualización: {database}</b>.
+            <b>Última actualización del Instituto Federal de Telecomunicaciones: {IFT}</b>.
+          </Typography>
+          <Typography paragraph align="justify" component="p">
+            <b>Última actualización de la base de datos: {PNN}</b>.
+          </Typography>
+          <Typography paragraph align="justify" component="p">
+            <b>Versión actual de APP: {APP}</b>.
+          </Typography>
+          <Typography paragraph align="justify" component="p">
+            <b>Versión actual de API: {API}</b>.
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -60,9 +69,9 @@ const MyExpansionPanel = props => {
   );
 };
 
-MyExpansionPanel.propTypes = {
-  expanded: PropTypes.bool.isRequired,
+MyExpansionPanel01.propTypes = {
+  expanded: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 
-export default MyExpansionPanel;
+export default MyExpansionPanel01;

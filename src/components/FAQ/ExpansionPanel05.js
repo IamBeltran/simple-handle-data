@@ -76,7 +76,7 @@ const MyExpansionPanel = props => {
 };
 
 MyExpansionPanel.propTypes = {
-  expanded: PropTypes.bool.isRequired,
+  expanded: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 

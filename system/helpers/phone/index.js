@@ -11,15 +11,12 @@
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ REQUIRE MY DEPENDENCIES MODULES.                                                  │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
-const Store = require('../../store/IFTStore');
-
-const IFTSTORE = new Store().setupStore();
-const IFTStore = IFTSTORE.IFT;
+const DATASTORE = require('../../store');
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DESTRUCTURING DEPENDENCIES.                                                       │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
-const { nirs, database: DBIFT } = IFTStore;
+const { NIRS, PNN } = DATASTORE;
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DECLARATION OF CONSTANTS-VARIABLES.                                               │
@@ -406,7 +403,7 @@ function phoneGetParts(phone) {
   let nir;
   let serie;
   let numeration;
-  if (nirs.includes(test)) {
+  if (NIRS.includes(test)) {
     nir = parseInt(phone.slice(0, 2), 10);
     serie = parseInt(phone.slice(2, 6), 10);
     numeration = parseInt(phone.slice(6, 10), 10);
@@ -462,7 +459,7 @@ function phoneGetIFT(phoneParts) {
   if (isType(numeration) !== 'number') {
     throw new PhoneError('Phone part numeration value, is not number');
   }
-  const DB = DBIFT;
+  const DB = PNN;
   const result = DB.filter(record => {
     return (
       record.nir === nir &&

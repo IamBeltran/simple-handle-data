@@ -10,49 +10,87 @@ const Store = require('electron-store');
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ REQUIRE MY DEPENDENCIES MODULES.                                                  │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
-const IFTFileJSON = require('./IFT.json');
+const PNNFileJSON = require('./PNNDB.json');
+const sendNotification = require('../helpers/sendNotification');
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DESTRUCTURING DEPENDENCIES.                                                       │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
 const {
-  update: { IFT, database },
-} = IFTFileJSON;
+  information: {
+    updated: { IFT: IFTFileUpdated, PNN: PNNFileUpdated },
+  },
+} = PNNFileJSON;
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DECLARATION OF CONSTANTS-VARIABLES.                                               │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
+const nameStore = 'store';
 const serialize = value => JSON.stringify(value, null, 2);
 const encryptionKey = 'oiV32mVp5lOwYneFESjrWq2xFByNOvNj';
-const IFTSchema = {
-  IFT: {
+const defaults = {
+  database: {
+    information: {
+      version: {
+        APP: '1.0.0',
+        API: '2.0.0',
+      },
+      updated: {
+        IFT: '2019-12-20',
+        PNN: '2019-12-20',
+      },
+    },
+    NIRS: [],
+    PNN: [], // PLAN NACIONAL DE MARCACÍON
+  },
+};
+const schema = {
+  database: {
     type: 'object',
     properties: {
-      version: {
+      information: {
         type: 'object',
         properties: {
-          API: { type: 'string' },
-          APP: { type: 'string' },
+          version: {
+            type: 'object',
+            properties: {
+              APP: {
+                type: 'string',
+              },
+              API: {
+                type: 'string',
+              },
+            },
+            additionalProperties: false,
+            required: ['APP', 'API'],
+          },
+          updated: {
+            type: 'object',
+            properties: {
+              IFT: {
+                type: 'string',
+                format: 'date',
+              },
+              PNN: {
+                type: 'string',
+                format: 'date',
+              },
+            },
+            additionalProperties: false,
+            required: ['IFT', 'PNN'],
+          },
         },
         additionalProperties: false,
-        required: ['API', 'APP'],
+        required: ['version', 'updated'],
       },
-      update: {
-        type: 'object',
-        properties: {
-          IFT: { type: 'string' },
-          database: { type: 'string' },
-        },
-        additionalProperties: false,
-        required: ['IFT', 'database'],
-      },
-      nirs: {
+      NIRS: {
         type: 'array',
         items: {
           type: 'number',
         },
+        uniqueItems: true,
       },
-      database: {
+      PNN: {
         type: 'array',
         items: {
           type: 'object',
@@ -67,7 +105,7 @@ const IFTSchema = {
             mobile: { type: 'boolean' },
             company: { type: 'string' },
           },
-          additionalProperties: false,
+          additionalProperties: true,
           required: [
             'population',
             'township',
@@ -83,7 +121,7 @@ const IFTSchema = {
       },
     },
     additionalProperties: false,
-    required: ['version', 'update', 'nirs', 'database'],
+    required: ['information', 'NIRS', 'PNN'],
   },
 };
 
@@ -98,34 +136,102 @@ const IFTSchema = {
 /**
  * @author        Victor Giovanni Beltrán Rodríguez
  * @version       2.0.0
- * @description   Create a new IFTStore, class for create
- * @class         IFTStore
+ * @description   Create a new Database, class for create
+ * @class         Database
  * @extends       {Store}
  */
-class IFTStore extends Store {
+class DataStore extends Store {
   constructor() {
-    super({ name: 'IFTStore', schema: IFTSchema, serialize, encryptionKey });
-    const updateIFT = this.get('IFT.update.IFT') || null;
-    const updateDB = this.get('IFT.update.database') || null;
-    this.hasStore = !!this.get('IFT');
-    this.updated = this.hasStore && (IFT === updateIFT && database === updateDB);
-    this.IFT = this.get('IFT') || null;
+    super({
+      name: nameStore,
+      defaults,
+      encryptionKey,
+      serialize,
+      schema,
+      clearInvalidConfig: true,
+    });
+    this.database = this.get('database') || null;
   }
 
-  setupStore() {
-    if (!this.hasStore) {
-      this.set('IFT', IFTFileJSON);
-      this.hasStore = true;
-      this.updated = true;
+  setDatabaseFromFile(action) {
+    try {
+      this.set('database', PNNFileJSON);
+      return this;
+    } catch (error) {
+      throw new Error(`Error in operation type ${action}`);
     }
-    if (!this.updated) {
-      this.set('IFT', IFTFileJSON);
-      this.updated = true;
+  }
+
+  checkStore() {
+    const hasDatabase = !!this.database;
+    const updatedIFT = this.get('database.information.updated.IFT') || null;
+    const updatedPNN = this.get('database.information.updated.PNN') || null;
+    const updated = hasDatabase && (updatedIFT === IFTFileUpdated && updatedPNN === PNNFileUpdated);
+    if (!hasDatabase) {
+      this.setDatabaseFromFile('CREATE');
+      sendNotification({
+        title: 'SIMPLE HANDLE DATA',
+        message: 'BASE DE DATOS CREADA',
+        type: 'info',
+      });
     }
-    this.IFT = this.get('IFT');
+    if (hasDatabase && !updated) {
+      this.clear();
+      this.setDatabaseFromFile('UPDATE');
+      sendNotification({
+        title: 'SIMPLE HANDLE DATA',
+        message: 'BASE DE DATOS ACTUALIZADA',
+        type: 'info',
+      });
+    }
+    if (hasDatabase && updated) {
+      sendNotification({
+        title: 'SIMPLE HANDLE DATA',
+        message: 'BASE DE DATOS SIN PROBLEMAS',
+        type: 'info',
+      });
+    }
     return this;
+  }
+
+  getInformation() {
+    const hasDatabase = !!this.database;
+    if (!hasDatabase) {
+      return null;
+    }
+    return this.get('database.information');
+  }
+
+  getNIRS() {
+    const hasDatabase = !!this.database;
+    if (!hasDatabase) {
+      return null;
+    }
+    return this.get('database.NIRS');
+  }
+
+  getPNN() {
+    const hasDatabase = !!this.database;
+    if (!hasDatabase) {
+      return null;
+    }
+    return this.get('database.PNN');
   }
 }
 
+//  ┌───────────────────────────────────────────────────────────────────────────────────┐
+//  │ INSTANCE CLASS                                                                    │
+//  └───────────────────────────────────────────────────────────────────────────────────┘
+const dataStore = new DataStore().checkStore();
+
+const INFORMATION = dataStore.getInformation();
+const NIRS = dataStore.getNIRS();
+const PNN = dataStore.getPNN();
+
 //  ──[ EXPORT MODULE ]──────────────────────────────────────────────────────────────────
-module.exports = IFTStore;
+const DATASTORE = (module.exports = exports = {}); // eslint-disable-line no-multi-assign
+
+// » Main Modules
+DATASTORE.INFORMATION = INFORMATION;
+DATASTORE.NIRS = NIRS;
+DATASTORE.PNN = PNN;

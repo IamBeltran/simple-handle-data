@@ -19,7 +19,7 @@ const electron = require('electron');
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ REQUIRE MY DEPENDENCIES MODULES.                                                  │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
-const { APP_ICON } = require('../../configurations');
+const { APP_ICON, APP_NAME } = require('../../configurations');
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DESTRUCTURING DEPENDENCIES.                                                       │
@@ -51,7 +51,7 @@ const contextMenu = Menu.buildFromTemplate([
 //  └───────────────────────────────────────────────────────────────────────────────────┘
 const createTray = () => {
   appIcon = new Tray(APP_ICON);
-  appIcon.setToolTip('REACTRON');
+  appIcon.setToolTip(APP_NAME);
   appIcon.setContextMenu(contextMenu);
 };
 //  ──[ EXPORT MODULE ]──────────────────────────────────────────────────────────────────

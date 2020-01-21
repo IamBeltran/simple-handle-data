@@ -133,6 +133,6 @@ GLOBAL_*.md
 release/
 assets/
 !.gitkeep
-system/helpers/handleFirebase/firebaseConfig.js
+system/handlers/handleFirebase/firebaseConfig.js
 # !SECTION
 # =======================================================================================

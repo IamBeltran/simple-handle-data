@@ -6,7 +6,8 @@
   ],
   "plugins": [
     "react",
-    "prettier"
+    "prettier",
+    "react-hooks"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -35,7 +36,15 @@
     "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
     "react/jsx-props-no-spreading": [0, { "html": "enforce", "custom": "ignore", "exceptions": ["img"] }],
     "import/no-dynamic-require": 0,
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["tools/**/*.js", "test/**/*.js"]}],
+    "import/no-extraneous-dependencies": [
+      "error", {
+        "devDependencies": [
+          "tools/**/*.js",
+          "test/**/*.js",
+          "gulpfile.js"
+          ]
+        }
+    ],
     "no-param-reassign": ["error", { "props": false }],
     "prettier/prettier": [
       "error",
@@ -44,6 +53,8 @@
         "printWidth": 100,
         "trailingComma": "all"
       }
-    ]
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }

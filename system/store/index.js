@@ -10,17 +10,17 @@ const Store = require('electron-store');
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ REQUIRE MY DEPENDENCIES MODULES.                                                  │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
-const PNNFileJSON = require('./PNNDB.json');
-const sendNotification = require('../helpers/sendNotification');
+const PNMFileJSON = require('./PNMDB.json');
+const sendNotification = require('../utils/sendNotification');
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DESTRUCTURING DEPENDENCIES.                                                       │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
 const {
   information: {
-    updated: { IFT: IFTFileUpdated, PNN: PNNFileUpdated },
+    updated: { IFT: IFTFileUpdated, PNM: PNMFileUpdated },
   },
-} = PNNFileJSON;
+} = PNMFileJSON;
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DECLARATION OF CONSTANTS-VARIABLES.                                               │
@@ -37,11 +37,11 @@ const defaults = {
       },
       updated: {
         IFT: '2019-12-20',
-        PNN: '2019-12-20',
+        PNM: '2019-12-20',
       },
     },
     NIRS: [],
-    PNN: [], // PLAN NACIONAL DE MARCACÍON
+    PNM: [], // PLAN NACIONAL DE MARCACÍON
   },
 };
 const schema = {
@@ -71,13 +71,13 @@ const schema = {
                 type: 'string',
                 format: 'date',
               },
-              PNN: {
+              PNM: {
                 type: 'string',
                 format: 'date',
               },
             },
             additionalProperties: false,
-            required: ['IFT', 'PNN'],
+            required: ['IFT', 'PNM'],
           },
         },
         additionalProperties: false,
@@ -90,7 +90,7 @@ const schema = {
         },
         uniqueItems: true,
       },
-      PNN: {
+      PNM: {
         type: 'array',
         items: {
           type: 'object',
@@ -121,7 +121,7 @@ const schema = {
       },
     },
     additionalProperties: false,
-    required: ['information', 'NIRS', 'PNN'],
+    required: ['information', 'NIRS', 'PNM'],
   },
 };
 
@@ -148,14 +148,13 @@ class DataStore extends Store {
       encryptionKey,
       serialize,
       schema,
-      clearInvalidConfig: true,
     });
     this.database = this.get('database') || null;
   }
 
   setDatabaseFromFile(action) {
     try {
-      this.set('database', PNNFileJSON);
+      this.set('database', PNMFileJSON);
       return this;
     } catch (error) {
       throw new Error(`Error in operation type ${action}`);
@@ -165,8 +164,9 @@ class DataStore extends Store {
   checkStore() {
     const hasDatabase = !!this.database;
     const updatedIFT = this.get('database.information.updated.IFT') || null;
-    const updatedPNN = this.get('database.information.updated.PNN') || null;
-    const updated = hasDatabase && (updatedIFT === IFTFileUpdated && updatedPNN === PNNFileUpdated);
+    const updatedPNM = this.get('database.information.updated.PNM') || null;
+    // eslint-disable-next-line prettier/prettier
+    const updated = hasDatabase && updatedIFT === IFTFileUpdated && updatedPNM === PNMFileUpdated;
     if (!hasDatabase) {
       this.setDatabaseFromFile('CREATE');
       sendNotification({
@@ -210,12 +210,12 @@ class DataStore extends Store {
     return this.get('database.NIRS');
   }
 
-  getPNN() {
+  getPNM() {
     const hasDatabase = !!this.database;
     if (!hasDatabase) {
       return null;
     }
-    return this.get('database.PNN');
+    return this.get('database.PNM');
   }
 }
 
@@ -226,7 +226,7 @@ const dataStore = new DataStore().checkStore();
 
 const INFORMATION = dataStore.getInformation();
 const NIRS = dataStore.getNIRS();
-const PNN = dataStore.getPNN();
+const PNM = dataStore.getPNM();
 
 //  ──[ EXPORT MODULE ]──────────────────────────────────────────────────────────────────
 const DATASTORE = (module.exports = exports = {}); // eslint-disable-line no-multi-assign
@@ -234,4 +234,4 @@ const DATASTORE = (module.exports = exports = {}); // eslint-disable-line no-mul
 // » Main Modules
 DATASTORE.INFORMATION = INFORMATION;
 DATASTORE.NIRS = NIRS;
-DATASTORE.PNN = PNN;
+DATASTORE.PNM = PNM;

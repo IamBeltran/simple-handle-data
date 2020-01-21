@@ -16,7 +16,7 @@ const DATASTORE = require('../../store');
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DESTRUCTURING DEPENDENCIES.                                                       │
 //  └───────────────────────────────────────────────────────────────────────────────────┘
-const { NIRS, PNN } = DATASTORE;
+const { NIRS, PNM } = DATASTORE;
 
 //  ┌───────────────────────────────────────────────────────────────────────────────────┐
 //  │ DECLARATION OF CONSTANTS-VARIABLES.                                               │
@@ -459,7 +459,7 @@ function phoneGetIFT(phoneParts) {
   if (isType(numeration) !== 'number') {
     throw new PhoneError('Phone part numeration value, is not number');
   }
-  const DB = PNN;
+  const DB = PNM;
   const result = DB.filter(record => {
     return (
       record.nir === nir &&

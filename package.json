@@ -64,7 +64,7 @@
     "history": "^4.10.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
-    "node-notifier": "^5.4.3",
+    "node-notifier": "^8.0.1",
     "prop-types": "^15.7.2",
     "query-string": "^6.10.1",
     "react": "^16.12.0",
